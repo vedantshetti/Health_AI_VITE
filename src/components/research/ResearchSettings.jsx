@@ -11,7 +11,7 @@ const ResearchSettings = ({
         <h3 className="text-ls font-medium text-white mb-2">
           Products to Find Per Influencer
         </h3>
-        <div className="bg-[#0F172A] rounded-md p-2">
+        <div className="bg-[#0F172A] rounded-md p-2 border border-gray-800 focus-within:border-emerald-500 focus-within:bg-emerald-900/20">
           <input
             type="number"
             defaultValue={0}
@@ -26,7 +26,7 @@ const ResearchSettings = ({
                 e.target.value = 0;
               }
             }}
-            className="w-full bg-transparent text-white outline-none"
+            className="w-full bg-transparent text-white outline-none placeholder-gray-400 focus:outline-none focus:ring-0"
           />
         </div>
         <p className="text-xs text-gray-400 mt-1">
