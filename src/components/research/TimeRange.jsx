@@ -1,3 +1,4 @@
+
 // src/components/research/TimeRange.jsx
 const TimeRange = ({ timeRange, setTimeRange }) => {
     return (
@@ -9,7 +10,7 @@ const TimeRange = ({ timeRange, setTimeRange }) => {
             className={`p-2 rounded-md text-left text-sm ${
               timeRange === "last-week"
                 ? "bg-emerald-900/20 border border-emerald-500 text-white"
-                : "bg-[#0F172A]/50 border border-gray-800 text-white"
+                : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
             }`}
           >
             Last Week
@@ -19,7 +20,7 @@ const TimeRange = ({ timeRange, setTimeRange }) => {
             className={`p-2 rounded-md text-left text-sm ${
               timeRange === "last-month"
                 ? "bg-emerald-900/20 border border-emerald-500 text-white"
-                : "bg-[#0F172A]/50 border border-gray-800 text-white"
+                : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
             }`}
           >
             Last Month
@@ -31,7 +32,7 @@ const TimeRange = ({ timeRange, setTimeRange }) => {
             className={`p-2 rounded-md text-left text-sm ${
               timeRange === "last-year"
                 ? "bg-emerald-900/20 border border-emerald-500 text-white"
-                : "bg-[#0F172A]/50 border border-gray-800 text-white"
+                : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
             }`}
           >
             Last Year
@@ -41,7 +42,7 @@ const TimeRange = ({ timeRange, setTimeRange }) => {
             className={`p-2 rounded-md text-left text-sm ${
               timeRange === "all-time"
                 ? "bg-emerald-900/20 border border-emerald-500 text-white"
-                : "bg-[#0F172A]/50 border border-gray-800 text-white"
+                : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
             }`}
           >
             All Time
