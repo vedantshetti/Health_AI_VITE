@@ -1,3 +1,5 @@
+import { ChartBarIcon, CheckCircleIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+
 // src/components/leaderboard/StatsCards.jsx
 const StatsCards = ({ stats }) => {
     return (

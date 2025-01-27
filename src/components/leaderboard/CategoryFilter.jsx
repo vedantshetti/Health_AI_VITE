@@ -1,3 +1,5 @@
+import { ArrowUpIcon } from "@heroicons/react/24/outline";
+
 // src/components/leaderboard/CategoryFilter.jsx
 const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
     const categories = ['All', 'Nutrition', 'Fitness', 'Medicine', 'Mental Health'];
