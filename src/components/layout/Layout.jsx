@@ -1,15 +1,16 @@
+import Navbar from "./Navbar";
+
 // src/components/layout/Layout.jsx
-import Navbar from './Navbar';
-
 const Layout = ({ children }) => {
-  return (
-    <div className="min-h-screen bg-secondary-dark">
-      <Navbar />
-      <main className="container mx-auto px-6 py-8">
-        {children}
-      </main>
-    </div>
-  );
-};
+    return (
+      <div className="min-h-screen bg-[#0F172A]"> {/* Darker background */}
+        <Navbar />
+        <main className="max-w-7xl mx-auto px-6 py-8">
+          {children}
+        </main>
+      </div>
+    );
+  };
 
-export default Layout;
+  export default Layout;    
+  
