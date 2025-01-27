@@ -8,7 +8,7 @@ const ResearchSettings = ({
     return (
       <div className="space-y-6">
         <div>
-          <h3 className="text-sm font-medium text-gray-200 mb-2">
+          <h3 className="text-sm font-medium text-white mb-2">
             Products to Find Per Influencer
           </h3>
           <div className="bg-[#0F172A] rounded-md p-2">

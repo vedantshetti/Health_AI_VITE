@@ -44,7 +44,7 @@ const ResearchTasks = () => {
         <div className="p-6 space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-[#0F172A] p-4 rounded-lg border border-gray-800">
-              <h3 className="text-xs font-medium text-gray-400 mb-2">
+              <h3 className="text-ls font-medium text-white mb-2">
                 Specific Influencer
               </h3>
               <input
@@ -54,7 +54,7 @@ const ResearchTasks = () => {
               />
             </div>
             <div className="bg-[#0F172A] p-4 rounded-lg border border-gray-800">
-              <h3 className="text-xs font-medium text-gray-400 mb-2">
+              <h3 className="text-ls font-medium text-white mb-2">
                 Discover New
               </h3>
               <input
