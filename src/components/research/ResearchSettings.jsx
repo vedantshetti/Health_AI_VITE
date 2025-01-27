@@ -8,7 +8,7 @@ const ResearchSettings = ({
     return (
       <div className="space-y-6">
         <div>
-          <h3 className="text-sm font-medium text-white mb-2">
+          <h3 className="text-ls font-medium text-white mb-2">
             Products to Find Per Influencer
           </h3>
           <div className="bg-[#0F172A] rounded-md p-2">
@@ -18,7 +18,7 @@ const ResearchSettings = ({
               className="w-full bg-transparent text-white"
             />
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-400 mt-1">
             Set to 0 to skip product research
           </p>
         </div>
@@ -26,7 +26,7 @@ const ResearchSettings = ({
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm text-white">Include Revenue Analysis</h3>
+              <h3 className="text-ls text-white">Include Revenue Analysis</h3>
               <p className="text-xs text-gray-400">
                 Analyze monetization methods and estimate earnings
               </p>
@@ -47,7 +47,7 @@ const ResearchSettings = ({
   
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm text-white">Verify with Scientific Journals</h3>
+              <h3 className="text-ls text-white">Verify with Scientific Journals</h3>
               <p className="text-xs text-gray-400">
                 Cross-reference claims with scientific literature
               </p>
