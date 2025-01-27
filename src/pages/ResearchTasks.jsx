@@ -50,7 +50,7 @@ const ResearchTasks = () => {
               <input
                 type="text"
                 placeholder="Research a known health influencer by name"
-                className="w-full bg-transparent border border-gray-800 rounded-md p-2 text-white placeholder-gray-600 text-sm"
+                className="w-full bg-transparent border border-gray-800 rounded-md p-2 text-white placeholder-gray-400 text-sm"
               />
             </div>
             <div className="bg-[#0F172A] p-4 rounded-lg border border-gray-800">
@@ -60,7 +60,7 @@ const ResearchTasks = () => {
               <input
                 type="text"
                 placeholder="Find and analyze new health influencers"
-                className="w-full bg-transparent border border-gray-800 rounded-md p-2 text-white placeholder-gray-600 text-sm"
+                className="w-full bg-transparent border border-gray-800 rounded-md p-2 text-white placeholder-gray-400 text-sm"
               />
             </div>
           </div>
