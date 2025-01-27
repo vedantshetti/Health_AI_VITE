@@ -1,8 +1,8 @@
 // src/pages/InfluencerLeaderboard.jsx
 import { useState } from 'react';
+import LeaderboardTable from '@/components/leaderboard/LeaderboardTable';
 import StatsCards from '@/components/leaderboard/StatsCards';
 import CategoryFilter from '@/components/leaderboard/CategoryFilter';
-import LeaderboardTable from '@/components/leaderboard/LeaderboardTable';
 
 // src/pages/InfluencerLeaderboard.jsx
 const InfluencerLeaderboard = () => {
