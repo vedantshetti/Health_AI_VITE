@@ -36,7 +36,7 @@ const ResearchTasks = () => {
       <div className="bg-[#0B1120] rounded-lg border border-gray-800">
         <div className="flex items-center p-6 border-b border-gray-800">
           <div className="w-4 h-4 bg-emerald-500 rounded-md mr-3" />
-          <h2 className="text-white text-sm font-medium">
+          <h2 className="text-white text-3xl font-medium">
             Research Configuration
           </h2>
         </div>
