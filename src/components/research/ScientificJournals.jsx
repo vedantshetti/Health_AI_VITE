@@ -2,24 +2,51 @@
 import { useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 
-const ScientificJournals = ({ selectedJournals, setSelectedJournals }) => {
+const ScientificJournals = () => {
   const [isAddingJournal, setIsAddingJournal] = useState(false);
   const [newJournal, setNewJournal] = useState('');
+  const [selectedJournals, setSelectedJournals] = useState([
+    'PubMed Central',
+    'Nature',
+    'Science',
+    'Cell',
+    'The Lancet',
+    'JAMA Network',
+    'New England Journal of Medicine'
+  ]);
+
+  const allJournals = [
+    'PubMed Central',
+    'Nature',
+    'Science',
+    'Cell',
+    'The Lancet',
+    'JAMA Network',
+    'New England Journal of Medicine'
+  ];
 
   const handleAddJournal = () => {
     if (newJournal.trim()) {
-      setSelectedJournals([...selectedJournals, newJournal.trim()]);
+      setSelectedJournals(prev => [...prev, newJournal.trim()]);
       setNewJournal('');
       setIsAddingJournal(false);
     }
   };
 
   const handleSelectAll = () => {
-    // Implement select all logic
+    setSelectedJournals([...allJournals]);
   };
 
   const handleDeselectAll = () => {
-    // Implement deselect all logic
+    setSelectedJournals([]);
+  };
+
+  const toggleJournal = (journal) => {
+    if (selectedJournals.includes(journal)) {
+      setSelectedJournals(prev => prev.filter(j => j !== journal));
+    } else {
+      setSelectedJournals(prev => [...prev, journal]);
+    }
   };
 
   return (
@@ -43,13 +70,16 @@ const ScientificJournals = ({ selectedJournals, setSelectedJournals }) => {
       </div>
       
       <div className="grid grid-cols-2 gap-4">
-        {selectedJournals.map((journal) => (
+        {allJournals.map((journal) => (
           <div
             key={journal}
-            className="flex items-center justify-between bg-[#0F172A]/50 p-3 rounded-md border border-emerald-900/30"
+            onClick={() => toggleJournal(journal)}
+            className="flex items-center justify-between bg-[#0F172A]/50 p-3 rounded-md border border-emerald-900/30 cursor-pointer hover:border-emerald-500/50"
           >
             <span className="text-gray-200">{journal}</span>
-            <span className="w-4 h-4 rounded-full bg-emerald-500" />
+            {selectedJournals.includes(journal) && (
+              <span className="w-4 h-4 rounded-full bg-emerald-500" />
+            )}
           </div>
         ))}
       </div>
@@ -62,6 +92,7 @@ const ScientificJournals = ({ selectedJournals, setSelectedJournals }) => {
             onChange={(e) => setNewJournal(e.target.value)}
             placeholder="Enter journal name"
             className="flex-1 bg-[#0F172A]/50 border border-emerald-900/30 rounded-md p-2 text-white placeholder-gray-500"
+            onKeyPress={(e) => e.key === 'Enter' && handleAddJournal()}
           />
           <button
             onClick={handleAddJournal}
