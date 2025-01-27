@@ -9,12 +9,12 @@ const NavLink = ({ to, children }) => (
 const Navbar = () => {
   return (
     <nav className="bg-[#0F172A] px-6 py-4 flex items-center justify-between border-b border-gray-800 fixed top-0 left-0 w-full z-50">
-      <div className="flex items-center space-x-2">
+      <Link to="/" className="flex items-center space-x-2">
         <div className="w-8 h-8 bg-emerald-500 rounded-md flex items-center justify-center">
           <span className="text-white text-xl">✓</span>
         </div>
         <span className="text-white font-semibold">VerifyInfluencers</span>
-      </div>
+      </Link>
 
       <div className="flex items-center space-x-8">
         <NavLink to="/leaderboard">Leaderboard</NavLink>
@@ -23,11 +23,9 @@ const Navbar = () => {
         <NavLink to="/research-tasks">Research Tasks</NavLink>
         <NavLink to="/journals">Scientific Journals</NavLink>
         <NavLink to="/analytics">Analytics</NavLink>
-        {/* <NavLink to="/settings">Settings</NavLink> */}
         <NavLink to="/about">About</NavLink>
         <NavLink to="/contact">Contact</NavLink>
         <NavLink to="/admin">Admin</NavLink>
-
         <button className="text-white hover:text-gray-300">Sign Out</button>
       </div>
     </nav>
