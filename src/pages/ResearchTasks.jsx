@@ -43,6 +43,8 @@ const ResearchTasks = () => {
 
         <div className="p-6 space-y-6">
           <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4"> */}
+
             <div className="bg-[#0F172A] p-4 rounded-lg border border-gray-800">
               <h3 className="text-ls font-medium text-white mb-2">
                 Specific Influencer
@@ -50,7 +52,7 @@ const ResearchTasks = () => {
               <input
                 type="text"
                 placeholder="Research a known health influencer by name"
-                className="w-full bg-transparent border border-gray-800 rounded-md p-2 text-white placeholder-gray-400 text-sm"
+                className="w-full bg-transparent border border-gray-800 rounded-md p-2 text-white placeholder-gray-400 text-sm focus:outline-none focus:ring focus:ring-emerald-900/20 focus:bg-emerald-900/20 focus:border-emerald-500"
               />
             </div>
             <div className="bg-[#0F172A] p-4 rounded-lg border border-gray-800">
@@ -60,7 +62,7 @@ const ResearchTasks = () => {
               <input
                 type="text"
                 placeholder="Find and analyze new health influencers"
-                className="w-full bg-transparent border border-gray-800 rounded-md p-2 text-white placeholder-gray-400 text-sm"
+                className="w-full bg-transparent border border-gray-800 rounded-md p-2 text-white placeholder-gray-400 text-sm focus:outline-none focus:ring focus:ring-emerald-900/20 focus:bg-emerald-900/20 focus:border-emerald-500"
               />
             </div>
           </div>
