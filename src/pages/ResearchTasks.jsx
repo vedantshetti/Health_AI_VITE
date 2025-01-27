@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { ArrowLeftIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import ScientificJournals from '@/components/research/ScientificJournals';
 
 const ResearchTasks = () => {
   const [timeRange, setTimeRange] = useState('last-month');
@@ -95,26 +96,11 @@ const ResearchTasks = () => {
         </div>
 
         {/* Scientific Journals section with updated styling */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-200">Scientific Journals</h3>
-            <div className="space-x-4">
-              <button className="text-emerald-400 text-sm hover:text-emerald-300">Select All</button>
-              <button className="text-emerald-400 text-sm hover:text-emerald-300">Deselect All</button>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {selectedJournals.map((journal) => (
-              <div
-                key={journal}
-                className="flex items-center justify-between bg-[#0F172A]/50 p-3 rounded-md border border-emerald-900/30"
-              >
-                <span className="text-gray-200">{journal}</span>
-                <span className="w-4 h-4 rounded-full bg-emerald-500" />
-              </div>
-            ))}
-          </div>
-        </div>
+        <ScientificJournals 
+          selectedJournals={selectedJournals}
+          setSelectedJournals={setSelectedJournals}
+        />
+
 
         {/* Start Research button with updated styling */}
         <div className="flex justify-end">
