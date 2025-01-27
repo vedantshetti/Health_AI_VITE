@@ -32,12 +32,11 @@ const ResearchTasks = () => {
       </div>
 
       <div className="bg-[#1E293B] rounded-lg p-8">
-        {" "}
-        {/* Darker panel background */}
         <div className="flex items-center mb-8">
           <div className="w-5 h-5 bg-emerald-500 rounded-md mr-3" />
           <h2 className="text-white font-medium">Research Configuration</h2>
         </div>
+
         <div className="grid grid-cols-2 gap-6 mb-8">
           <div className="bg-[#0F172A]/50 p-4 rounded-lg border border-emerald-900/30">
             <h3 className="text-sm font-medium text-gray-200 mb-2">
@@ -60,30 +59,74 @@ const ResearchTasks = () => {
             />
           </div>
         </div>
-        {/* Time Range buttons with updated styling */}
-        <div className="mb-8">
-          <h3 className="text-sm font-medium text-gray-200 mb-3">Time Range</h3>
-          <div className="grid grid-cols-4 gap-4">
-            {["Last Week", "Last Month", "Last Year", "All Time"].map(
-              (range) => (
-                <button
-                  key={range}
-                  onClick={() =>
-                    setTimeRange(range.toLowerCase().replace(" ", "-"))
-                  }
-                  className={`p-2 rounded-md text-center text-sm ${
-                    timeRange === range.toLowerCase().replace(" ", "-")
-                      ? "bg-emerald-900/20 border border-emerald-500 text-white"
-                      : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
-                  }`}
-                >
-                  {range}
-                </button>
-              )
-            )}
+
+        {/* Time Range and Products to Find Per Influencer section */}
+        <div className="grid grid-cols-2 gap-6 mb-8">
+          {/* Left column - Time Range */}
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-sm font-medium text-gray-200 mb-2">Time Range</h3>
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              <button
+                onClick={() => setTimeRange("last-week")}
+                className={`p-2 rounded-md text-left text-sm ${
+                  timeRange === "last-week"
+                    ? "bg-emerald-900/20 border border-emerald-500 text-white"
+                    : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
+                }`}
+              >
+                Last Week
+              </button>
+              <button
+                onClick={() => setTimeRange("last-month")}
+                className={`p-2 rounded-md text-left text-sm ${
+                  timeRange === "last-month"
+                    ? "bg-emerald-900/20 border border-emerald-500 text-white"
+                    : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
+                }`}
+              >
+                Last Month
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => setTimeRange("last-year")}
+                className={`p-2 rounded-md text-left text-sm ${
+                  timeRange === "last-year"
+                    ? "bg-emerald-900/20 border border-emerald-500 text-white"
+                    : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
+                }`}
+              >
+                Last Year
+              </button>
+              <button
+                onClick={() => setTimeRange("all-time")}
+                className={`p-2 rounded-md text-left text-sm ${
+                  timeRange === "all-time"
+                    ? "bg-emerald-900/20 border border-emerald-500 text-white"
+                    : "bg-[#0F172A]/50 border border-gray-800 text-gray-400"
+                }`}
+              >
+                All Time
+              </button>
+            </div>
+          </div>
+
+          {/* Right column - Products to Find Per Influencer */}
+          <div>
+            <h3 className="text-sm font-medium text-gray-200 mb-2">
+              Products to Find Per Influencer
+            </h3>
+            <input
+              type="number"
+              defaultValue={10}
+              className="w-full bg-[#0F172A]/50 border border-gray-800 rounded-md p-2 text-white"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Set to 0 to skip product research
+            </p>
           </div>
         </div>
-        {/* Toggle switches with updated styling */}
+
         <div className="space-y-4 mb-8">
           <div className="flex items-center justify-between">
             <div>
@@ -108,12 +151,12 @@ const ResearchTasks = () => {
             </button>
           </div>
         </div>
-        {/* Scientific Journals section with updated styling */}
+
         <ScientificJournals
           selectedJournals={selectedJournals}
           setSelectedJournals={setSelectedJournals}
         />
-        {/* Start Research button with updated styling */}
+
         <div className="flex justify-end">
           <button className="bg-emerald-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-emerald-600 transition-colors">
             <PlusIcon className="h-4 w-4 mr-2" />
