@@ -3,7 +3,7 @@
 const TimeRange = ({ timeRange, setTimeRange }) => {
     return (
       <div className="flex flex-col space-y-2">
-        <h3 className="text-sm font-medium text-gray-200 mb-2">Time Range</h3>
+        <h3 className="text-ls font-medium text-gray-200 mb-2">Time Range</h3>
         <div className="grid grid-cols-2 gap-2 mb-2">
           <button
             onClick={() => setTimeRange("last-week")}

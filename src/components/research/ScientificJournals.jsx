@@ -46,7 +46,7 @@ const ScientificJournals = () => {
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-medium text-gray-200">
+        <h3 className="text-ls font-medium text-gray-200">
           Scientific Journals
         </h3>
         <div className="space-x-4">
