@@ -64,7 +64,9 @@ const ResearchTasks = () => {
         <div className="grid grid-cols-2 gap-6 mb-8">
           {/* Left column - Time Range */}
           <div className="flex flex-col space-y-2">
-            <h3 className="text-sm font-medium text-gray-200 mb-2">Time Range</h3>
+            <h3 className="text-sm font-medium text-gray-200 mb-2">
+              Time Range
+            </h3>
             <div className="grid grid-cols-2 gap-2 mb-2">
               <button
                 onClick={() => setTimeRange("last-week")}
@@ -112,43 +114,71 @@ const ResearchTasks = () => {
           </div>
 
           {/* Right column - Products to Find Per Influencer */}
-          <div>
-            <h3 className="text-sm font-medium text-gray-200 mb-2">
-              Products to Find Per Influencer
-            </h3>
-            <input
-              type="number"
-              defaultValue={10}
-              className="w-full bg-[#0F172A]/50 border border-gray-800 rounded-md p-2 text-white"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Set to 0 to skip product research
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-4 mb-8">
-          <div className="flex items-center justify-between">
+          {/* Right column - Products to Find Per Influencer and Toggle Switches */}
+          <div className="space-y-6">
             <div>
-              <h3 className="text-gray-200 font-medium">
-                Include Revenue Analysis
+              <h3 className="text-sm font-medium text-gray-200 mb-2">
+                Products to Find Per Influencer
               </h3>
-              <p className="text-sm text-gray-400">
-                Analyze monetization methods and estimate earnings
+              <div className="bg-[#0F172A] rounded-md p-2">
+                <input
+                  type="number"
+                  defaultValue={10}
+                  className="w-full bg-transparent text-white"
+                />
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Set to 0 to skip product research
               </p>
             </div>
-            <button
-              onClick={() => setIncludeRevenue(!includeRevenue)}
-              className={`w-12 h-6 rounded-full transition-colors ${
-                includeRevenue ? "bg-emerald-500" : "bg-gray-700"
-              }`}
-            >
-              <span
-                className={`block w-4 h-4 bg-white rounded-full transition-transform ${
-                  includeRevenue ? "translate-x-7" : "translate-x-1"
-                }`}
-              />
-            </button>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm text-white">
+                    Include Revenue Analysis
+                  </h3>
+                  <p className="text-xs text-gray-400">
+                    Analyze monetization methods and estimate earnings
+                  </p>
+                </div>
+                <button
+                  onClick={() => setIncludeRevenue(!includeRevenue)}
+                  className={`w-12 h-6 rounded-full transition-colors ${
+                    includeRevenue ? "bg-emerald-500" : "bg-[#1E293B]"
+                  }`}
+                >
+                  <span
+                    className={`block w-4 h-4 bg-white rounded-full transition-transform ${
+                      includeRevenue ? "translate-x-7" : "translate-x-1"
+                    }`}
+                  />
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm text-white">
+                    Verify with Scientific Journals
+                  </h3>
+                  <p className="text-xs text-gray-400">
+                    Cross-reference claims with scientific literature
+                  </p>
+                </div>
+                <button
+                  onClick={() => setVerifyJournals(!verifyJournals)}
+                  className={`w-12 h-6 rounded-full transition-colors ${
+                    verifyJournals ? "bg-emerald-500" : "bg-[#1E293B]"
+                  }`}
+                >
+                  <span
+                    className={`block w-4 h-4 bg-white rounded-full transition-transform ${
+                      verifyJournals ? "translate-x-7" : "translate-x-1"
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
