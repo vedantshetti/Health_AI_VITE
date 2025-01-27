@@ -192,7 +192,7 @@ export const influencers = [
     {
       rank: 20,
       name: "Dr. Tim Spector",
-      image: "https://images.unsplash.com/photo-1594842293552-cfc70362571e?q=80&w=2052&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
       category: "Gut Health",
       trustScore: "74%",
       trend: "down",
@@ -202,7 +202,7 @@ export const influencers = [
     {
       rank: 21,
       name: "Dr. Frank Lipman",
-      image: "https://images.unsplash.com/photo-1527180240-9c2b961f21e6?q=80&w=2052&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
       category: "Functional Medicine",
       trustScore: "73%",
       trend: "up",
@@ -212,7 +212,7 @@ export const influencers = [
     {
       rank: 22,
       name: "Dr. Terry Grossman",
-      image: "https://images.unsplash.com/photo-1612348712298-a933ea29b1a0?q=80&w=2052&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
       category: "Longevity",
       trustScore: "72%",
       trend: "up",
@@ -222,7 +222,7 @@ export const influencers = [
     {
       rank: 23,
       name: "Dr. Dean Ornish",
-      image: "https://images.unsplash.com/photo-1620003939308-1b8dd7e5e83e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
       category: "Heart Health",
       trustScore: "71%",
       trend: "down",
@@ -232,7 +232,7 @@ export const influencers = [
     {
       rank: 24,
       name: "Dr. Joel Kahn",
-      image: "https://images.unsplash.com/photo-1588003735649-0e8a1df8ab6c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
       category: "Plant-Based Diets",
       trustScore: "70%",
       trend: "up",
@@ -242,7 +242,7 @@ export const influencers = [
     {
       rank: 25,
       name: "Dr. Amy Myers",
-      image: "https://images.unsplash.com/photo-1625577519595-22d7b8cd7d92?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
       category: "Autoimmune Diseases",
       trustScore: "69%",
       trend: "up",
@@ -252,7 +252,7 @@ export const influencers = [
     {
       rank: 26,
       name: "Dr. Valter Longo",
-      image: "https://images.unsplash.com/photo-1614006310553-c04ae9b6f23a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
       category: "Fasting",
       trustScore: "68%",
       trend: "down",
@@ -262,7 +262,7 @@ export const influencers = [
     {
       rank: 27,
       name: "Dr. Michael Mosley",
-      image: "https://images.unsplash.com/photo-1634064216605-0028a1c3e8d7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
       category: "Health Education",
       trustScore: "67%",
       trend: "up",
