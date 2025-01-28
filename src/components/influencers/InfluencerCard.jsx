@@ -17,7 +17,7 @@ const InfluencerCard = ({ influencer }) => {
             
             <div className="mt-4 grid grid-cols-3 gap-4">
               <div>
-                <div className="text-2xl font-semibold text-white">{influencer.trustScore}%</div>
+                <div className="text-2xl font-semibold text-white">{influencer.trustScore}</div>
                 <div className="text-xs text-gray-400">Trust Score</div>
               </div>
               <div>
