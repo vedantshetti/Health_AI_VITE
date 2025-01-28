@@ -6,23 +6,45 @@ const ClaimsFilter = ({ selectedStatus, setSelectedStatus, isHighest, setIsHighe
   const statuses = ['All Claims', 'Verified', 'Questionable', 'Debunked'];
 
   const handleExport = () => {
+    // Add headers with proper spacing
+    const headers = [
+      "Influencer",
+      "Status",
+      "Confidence Score",
+      "Journal Reference",
+      "Date",
+      "Notes"  // Optional column for additional info
+    ].join(",") + ",\n";
+  
     const csvContent = 
       "data:text/csv;charset=utf-8," + 
-      claims.map(claim => 
-        [
-          claim.influencer.name,
-          claim.content,
-          claim.verificationStatus,
-          claim.confidenceScore,
-          claim.sourceLinks.join(';'),
-          claim.datePublished
-        ].join(",")
-      ).join("\n");
+      headers +
+      claims.map(claim => {
+        // Format each row with proper spacing and data
+        const row = [
+          `"${claim.influencer.name}"`,  // Quote names to handle commas
+          `"${claim.verificationStatus}"`,
+          `${claim.confidenceScore}`,
+          `"${claim.scientificReferences[0]?.journal || ''}"`, // Get first journal reference
+          `"${new Date(claim.datePublished).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+          })}"`,
+          `"${claim.content}"` // Add claim content as notes
+        ].join(",");
+        
+        // Add empty line after each row for better readability
+        return row + ",\n";
+      }).join("\n");
   
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `health-claims-${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute(
+      "download", 
+      `health-claims-${new Date().toISOString().split('T')[0]}.csv`
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
