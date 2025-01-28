@@ -5,6 +5,7 @@ import ResearchTasks from './pages/ResearchTasks';
 import InfluencerLeaderboard from './pages/InfluencerLeaderboard';
 import Claims from './pages/Claims';
 import Influencers from './pages/Influencers';
+import InfluencerProfile from './pages/InfluencerProfile';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/leaderboard" element={<InfluencerLeaderboard />} />
           <Route path="/claims" element={<Claims />} />
           <Route path="/influencers" element={<Influencers />} />
+          <Route path="/influencers/:id" element={<InfluencerProfile />} />
         </Routes>
       </Layout>
     </Router>

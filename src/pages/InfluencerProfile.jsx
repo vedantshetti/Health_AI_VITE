@@ -1,10 +1,26 @@
 // src/pages/InfluencerProfile.jsx
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect} from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { influencers } from '@/data/influencers';
+import { claims } from '@/data/claims';
 
 const InfluencerProfile = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Claims Analysis');
+  const [influencer, setInfluencer] = useState(null);
+
+  useEffect(() => {
+    const foundInfluencer = influencers.find(inf => inf.rank.toString() === id);
+    if (!foundInfluencer) {
+      navigate('/influencers');
+      return;
+    }
+    setInfluencer(foundInfluencer);
+  }, [id, navigate]);
+
+  if (!influencer) return null;
+
   
   return (
     <div className="min-h-screen bg-[#0B1120]">
