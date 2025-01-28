@@ -1,7 +1,9 @@
+// src/components/claims/ClaimsTable.jsx
 import { claims } from "@/data/claims";
-import { format } from "date-fns"; // Add this for date formatting
+import { format } from "date-fns";
+import { useMemo } from 'react';
 
-const ClaimsTable = () => {
+const ClaimsTable = ({ selectedStatus, isHighest }) => {
   const getStatusColor = (status) => {
     switch (status) {
       case "verified":
@@ -21,6 +23,26 @@ const ClaimsTable = () => {
     return "text-red-500";
   };
 
+  // Filter and sort claims
+  const filteredAndSortedClaims = useMemo(() => {
+    let filtered = claims;
+    
+    // Apply status filter
+    if (selectedStatus !== 'all') {
+      filtered = claims.filter(claim => 
+        claim.verificationStatus === selectedStatus
+      );
+    }
+
+    // Apply sorting
+    return [...filtered].sort((a, b) => {
+      return isHighest 
+        ? b.confidenceScore - a.confidenceScore
+        : a.confidenceScore - b.confidenceScore;
+    });
+  }, [selectedStatus, isHighest]);
+
+
   return (
     <div className="bg-[#0B1120] rounded-lg border border-gray-800">
       <div className="overflow-hidden">
@@ -38,7 +60,7 @@ const ClaimsTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {claims.map((claim) => (
+                {filteredAndSortedClaims.map((claim) => (
                   <tr
                     key={claim.id}
                     className="border-b border-gray-800 hover:bg-[#1E293B]/50"
