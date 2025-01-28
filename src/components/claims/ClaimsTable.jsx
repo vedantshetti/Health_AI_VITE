@@ -1,56 +1,95 @@
+import { claims } from "@/data/claims";
+import { format } from "date-fns"; // Add this for date formatting
+
 const ClaimsTable = () => {
-    return (
-      <div className="bg-[#0B1120] rounded-lg border border-gray-800">
-        <div className="overflow-hidden">
-          <div className="overflow-x-auto">
-            <div className="overflow-y-auto max-h-[600px] scrollbar-thin scrollbar-track-[#0B1120] scrollbar-thumb-gray-700 hover:scrollbar-thumb-gray-600">
-              <table className="w-full">
-                <thead className="sticky top-0 bg-[#0B1120] z-10">
-                  <tr className="border-b border-gray-800">
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">INFLUENCER</th>
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">CLAIM</th>
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">STATUS</th>
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">CONFIDENCE</th>
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">REFERENCES</th>
-                    <th className="text-left p-4 text-gray-400 text-sm font-medium">DATE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Example row */}
-                  <tr className="border-b border-gray-800 hover:bg-[#1E293B]/50">
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "verified":
+        return "bg-emerald-500/10 text-emerald-500";
+      case "questionable":
+        return "bg-yellow-500/10 text-yellow-500";
+      case "debunked":
+        return "bg-red-500/10 text-red-500";
+      default:
+        return "bg-gray-500/10 text-gray-500";
+    }
+  };
+
+  const getConfidenceColor = (score) => {
+    if (score >= 90) return "text-emerald-500";
+    if (score >= 80) return "text-yellow-500";
+    return "text-red-500";
+  };
+
+  return (
+    <div className="bg-[#0B1120] rounded-lg border border-gray-800">
+      <div className="overflow-hidden">
+        <div className="overflow-x-auto">
+          <div className="overflow-y-auto max-h-[600px] scrollbar-thin scrollbar-track-[#0B1120] scrollbar-thumb-gray-700 hover:scrollbar-thumb-gray-600">
+            <table className="w-full">
+              <thead className="sticky top-0 bg-[#0B1120] z-10">
+                <tr className="border-b border-gray-800">
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">INFLUENCER</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">CLAIM</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">STATUS</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">CONFIDENCE</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">REFERENCES</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">DATE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {claims.map((claim) => (
+                  <tr
+                    key={claim.id}
+                    className="border-b border-gray-800 hover:bg-[#1E293B]/50"
+                  >
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gray-700" />
-                        <span className="text-white text-sm">Dr. Peter Attia</span>
+                        <div className="w-8 h-8 rounded-full bg-gray-700 overflow-hidden">
+                          <img
+                            src={claim.influencer.image}
+                            alt={claim.influencer.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <span className="text-white text-sm">{claim.influencer.name}</span>
                       </div>
                     </td>
-                    <td className="p-4 text-gray-400 text-sm">
-                      "Regular exercise reduces risk of cardiovascular disease by 30%"
+                    <td className="p-4 text-gray-400 text-sm max-w-md">
+                      {claim.content}
                     </td>
                     <td className="p-4">
-                      <span className="px-3 py-1 rounded-full text-xs bg-emerald-500/10 text-emerald-500">
-                        Verified
+                      <span className={`px-3 py-1 rounded-full text-xs capitalize ${getStatusColor(claim.verificationStatus)}`}>
+                        {claim.verificationStatus}
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="text-emerald-500 text-sm">94%</span>
+                      <span className={`text-sm ${getConfidenceColor(claim.confidenceScore)}`}>
+                        {claim.confidenceScore}%
+                      </span>
                     </td>
                     <td className="p-4">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-400">3 Sources</span>
+                        <span className="text-sm text-gray-400">
+                          {claim.sourceLinks.length} Sources
+                        </span>
                         <button className="text-emerald-400 text-sm hover:text-emerald-300">
                           View
                         </button>
                       </div>
                     </td>
-                    <td className="p-4 text-gray-400 text-sm">Jan 28, 2025</td>
+                    <td className="p-4 text-gray-400 text-sm">
+                      {format(new Date(claim.datePublished), 'MMM dd, yyyy')}
+                    </td>
                   </tr>
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    );
-  };
-export default ClaimsTable;  
+    </div>
+  );
+};
+
+export default ClaimsTable;
