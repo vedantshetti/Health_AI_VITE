@@ -132,33 +132,60 @@ const ClaimsFilter = ({
 
           {showDatePicker && (
             <div className="absolute top-full mt-2 bg-[#1E293B] rounded-lg p-4 shadow-lg z-50">
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-gray-400 text-xs mb-1">
-                    From
-                  </label>
-                  <input
-                    type="date"
-                    value={dateRange?.start || ""}
-                    onChange={(e) =>
-                      setDateRange((prev) => ({
-                        ...prev,
-                        start: e.target.value,
-                      }))
-                    }
-                    className="bg-[#0B1120] text-white px-3 py-2 rounded-md w-full text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-400 text-xs mb-1">To</label>
-                  <input
-                    type="date"
-                    value={dateRange?.end || ""}
-                    onChange={(e) =>
-                      setDateRange((prev) => ({ ...prev, end: e.target.value }))
-                    }
-                    className="bg-[#0B1120] text-white px-3 py-2 rounded-md w-full text-sm"
-                  />
+              <div className="relative">
+                {/* Close button */}
+                <button
+                  onClick={() => setShowDatePicker(false)}
+                  className="absolute -top-2 -right-2 text-gray-400 hover:text-gray-300 p-1"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-gray-400 text-xs mb-1">
+                      From
+                    </label>
+                    <input
+                      type="date"
+                      value={dateRange?.start || ""}
+                      onChange={(e) =>
+                        setDateRange((prev) => ({
+                          ...prev,
+                          start: e.target.value,
+                        }))
+                      }
+                      className="bg-[#0B1120] text-white px-3 py-2 rounded-md w-full text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-400 text-xs mb-1">
+                      To
+                    </label>
+                    <input
+                      type="date"
+                      value={dateRange?.end || ""}
+                      onChange={(e) =>
+                        setDateRange((prev) => ({
+                          ...prev,
+                          end: e.target.value,
+                        }))
+                      }
+                      className="bg-[#0B1120] text-white px-3 py-2 rounded-md w-full text-sm"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
