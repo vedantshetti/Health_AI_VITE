@@ -2,13 +2,19 @@
 import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/24/outline";
 import { influencers } from "@/data/influencers";
 
-const LeaderboardTable = ({ selectedCategory }) => {
+const LeaderboardTable = ({ selectedCategory, isHighest }) => {
   const filteredInfluencers =
     selectedCategory === "all"
       ? influencers
       : influencers.filter(
           (inf) => inf.category.toLowerCase() === selectedCategory
         );
+
+  const sortedInfluencers = [...filteredInfluencers].sort((a, b) => {
+    const scoreA = parseInt(a.trustScore);
+    const scoreB = parseInt(b.trustScore);
+    return isHighest ? scoreB - scoreA : scoreA - scoreB;
+  });
 
   return (
     <div className="bg-[#0B1120] rounded-lg border border-gray-800">
@@ -42,14 +48,12 @@ const LeaderboardTable = ({ selectedCategory }) => {
                 </tr>
               </thead>
               <tbody>
-                {filteredInfluencers.map((influencer) => (
+                {sortedInfluencers.map((influencer, index) => (
                   <tr
                     key={influencer.rank}
                     className="border-b border-gray-800 hover:bg-[#1E293B]/50"
                   >
-                    <td className="p-4 text-gray-400 text-sm">
-                      #{influencer.rank}
-                    </td>
+                    <td className="p-4 text-gray-400 text-sm">#{index + 1}</td>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-gray-700 overflow-hidden">
