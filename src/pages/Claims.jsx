@@ -2,6 +2,7 @@
 import { useState } from "react";
 import ClaimsFilter from "@/components/claims/ClaimsFilter";
 import ClaimsTable from "@/components/claims/ClaimsTable";
+import { claims } from "@/data/claims";
 
 const Claims = () => {
   const [selectedStatus, setSelectedStatus] = useState("all");
@@ -25,6 +26,7 @@ const Claims = () => {
           setSelectedStatus={setSelectedStatus}
           isHighest={isHighest}
           setIsHighest={setIsHighest}
+          claims={claims} // Add this prop
         />
         <ClaimsTable selectedStatus={selectedStatus} isHighest={isHighest} />
       </div>

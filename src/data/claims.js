@@ -4,7 +4,7 @@ export const claims = [
       influencerId: 1, // Dr. Peter Attia
       influencer: {
         name: "Dr. Peter Attia",
-        image: "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+        image:  "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
         category: "Medicine"
       },
       content: "Regular exercise reduces risk of cardiovascular disease by 30%",
@@ -92,7 +92,7 @@ export const claims = [
       influencerId: 4, // Andrew Huberman
       influencer: {
         name: "Andrew Huberman",
-        image: "https://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+        image:   "https://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
         category: "Neuroscience"
       },
       content: "Morning sunlight exposure helps regulate circadian rhythm",
@@ -263,10 +263,10 @@ export const claims = [
       },
       {
         id: 10,
-        influencerId: 10, // Dr. Jeff Volek
+        influencerId: 10, // Dr. Jeff Volekhttps://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
         influencer: {
           name: "Dr. Jeff Volek",
-          image: "https://images.unsplash.com/photo-1512343799357-e4d9ae5fbf6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+          image: "https://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
           category: "Exercise Physiology"
         },
         content: "Low-carb diets enhance athletic performance for endurance athletes",
@@ -411,7 +411,7 @@ export const claims = [
         influencerId: 15, // Dr. Neal Barnard
         influencer: {
           name: "Dr. Neal Barnard",
-          image: "https://images.unsplash.com/photo-1597450544010-12e0101c10ad?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+          image: "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
           category: "Nutrition"
         },
         content: "Low-fat, whole-food plant-based diets reverse type 2 diabetes",

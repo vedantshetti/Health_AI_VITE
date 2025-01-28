@@ -1,12 +1,33 @@
 // src/components/claims/ClaimsFilter.jsx
 import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/24/outline";
 
-const ClaimsFilter = ({ selectedStatus, setSelectedStatus, isHighest, setIsHighest }) => {
+
+const ClaimsFilter = ({ selectedStatus, setSelectedStatus, isHighest, setIsHighest, claims }) => {
   const statuses = ['All Claims', 'Verified', 'Questionable', 'Debunked'];
 
   const handleExport = () => {
-    console.log('Exporting claims...');
+    const csvContent = 
+      "data:text/csv;charset=utf-8," + 
+      claims.map(claim => 
+        [
+          claim.influencer.name,
+          claim.content,
+          claim.verificationStatus,
+          claim.confidenceScore,
+          claim.sourceLinks.join(';'),
+          claim.datePublished
+        ].join(",")
+      ).join("\n");
+  
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `health-claims-${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
+  
 
   const handleStatusChange = (status) => {
     setSelectedStatus(status === 'All Claims' ? 'all' : status.toLowerCase());
