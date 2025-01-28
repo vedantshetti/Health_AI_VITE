@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import ResearchTasks from './pages/ResearchTasks';
 import InfluencerLeaderboard from './pages/InfluencerLeaderboard';
 import Claims from './pages/Claims';
+import Influencers from './pages/Influencers';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<ResearchTasks />} />
           <Route path="/leaderboard" element={<InfluencerLeaderboard />} />
           <Route path="/claims" element={<Claims />} />
+          <Route path="/influencers" element={<Influencers />} />
         </Routes>
       </Layout>
     </Router>
