@@ -161,6 +161,7 @@ const ClaimsFilter = ({
                     <input
                       type="date"
                       value={dateRange?.start || ""}
+                      max={new Date().toISOString().split("T")[0]} // Restrict to today
                       onChange={(e) =>
                         setDateRange((prev) => ({
                           ...prev,
@@ -177,6 +178,7 @@ const ClaimsFilter = ({
                     <input
                       type="date"
                       value={dateRange?.end || ""}
+                      max={new Date().toISOString().split("T")[0]} // Restrict to today
                       onChange={(e) =>
                         setDateRange((prev) => ({
                           ...prev,
