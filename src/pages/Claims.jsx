@@ -1,3 +1,6 @@
+import ClaimsFilter from "@/components/claims/ClaimsFilter";
+import ClaimsTable from "@/components/claims/ClaimsTable";
+
 // src/pages/Claims.jsx
 const Claims = () => {
     return (
@@ -19,3 +22,4 @@ const Claims = () => {
     );
   };
   
+  export default Claims;
