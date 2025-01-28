@@ -1,10 +1,11 @@
 // src/pages/Claims.jsx
-import { useState } from 'react';
-import ClaimsFilter from '@/components/claims/ClaimsFilter';
-import ClaimsTable from '@/components/claims/ClaimsTable';
+import { useState } from "react";
+import ClaimsFilter from "@/components/claims/ClaimsFilter";
+import ClaimsTable from "@/components/claims/ClaimsTable";
 
 const Claims = () => {
-  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [isHighest, setIsHighest] = useState(true);
 
   return (
     <div className="min-h-screen bg-[#0B1120]">
@@ -14,15 +15,18 @@ const Claims = () => {
             Health Claims Verification
           </h1>
           <p className="text-gray-400 text-sm">
-            Comprehensive database of verified health claims from influencers, cross-referenced with scientific research and expert analysis.
+            Comprehensive database of verified health claims from influencers,
+            cross-referenced with scientific research and expert analysis.
           </p>
         </div>
 
-        <ClaimsFilter 
+        <ClaimsFilter
           selectedStatus={selectedStatus}
           setSelectedStatus={setSelectedStatus}
+          isHighest={isHighest}
+          setIsHighest={setIsHighest}
         />
-        <ClaimsTable selectedStatus={selectedStatus} />
+        <ClaimsTable selectedStatus={selectedStatus} isHighest={isHighest} />
       </div>
     </div>
   );

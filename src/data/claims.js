@@ -1,8 +1,7 @@
-// src/data/claims.js
 export const claims = [
     {
       id: 1,
-      influencerId: 1, // References Dr. Peter Attia
+      influencerId: 1, // Dr. Peter Attia
       influencer: {
         name: "Dr. Peter Attia",
         image: "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
@@ -10,7 +9,7 @@ export const claims = [
       },
       content: "Regular exercise reduces risk of cardiovascular disease by 30%",
       category: "Medicine",
-      verificationStatus: "verified", // verified, questionable, debunked
+      verificationStatus: "verified",
       confidenceScore: 94,
       sourceLinks: [
         "New England Journal of Medicine",
@@ -32,7 +31,7 @@ export const claims = [
     },
     {
       id: 2,
-      influencerId: 2, // References Dr. Rhonda Patrick
+      influencerId: 2, // Dr. Rhonda Patrick
       influencer: {
         name: "Dr. Rhonda Patrick",
         image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
@@ -61,7 +60,36 @@ export const claims = [
     },
     {
       id: 3,
-      influencerId: 4, // References Andrew Huberman
+      influencerId: 3, // Dr. Chris Palmer
+      influencer: {
+        name: "Dr. Chris Palmer",
+        image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+        category: "Mental Health"
+      },
+      content: "Meditation reduces symptoms of depression and anxiety",
+      category: "Mental Health",
+      verificationStatus: "verified",
+      confidenceScore: 90,
+      sourceLinks: [
+        "Journal of Psychiatric Research",
+        "American Psychological Association"
+      ],
+      scientificReferences: [
+        {
+          journal: "Journal of Psychiatric Research",
+          title: "The Impact of Meditation on Mental Health",
+          year: 2024,
+          doi: "10.1016/j.psychres.2024.03.005"
+        }
+      ],
+      datePublished: "2025-01-22",
+      platform: "YouTube",
+      engagement: 10234,
+      aiAnalysis: "Scientific studies support the role of mindfulness meditation in reducing psychological stress."
+    },
+    {
+      id: 4,
+      influencerId: 4, // Andrew Huberman
       influencer: {
         name: "Andrew Huberman",
         image: "https://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
@@ -86,36 +114,37 @@ export const claims = [
       datePublished: "2025-01-25",
       platform: "Podcast",
       engagement: 25678,
-      aiAnalysis: "Well-established mechanism supported by chronobiology research."
+      aiAnalysis: "Strong evidence suggests that exposure to morning light influences melatonin production and sleep quality."
     },
     {
-      id: 4,
-      influencerId: 5, // References Dr. Dominic D'Agostino
+      id: 5,
+      influencerId: 5, // Dr. Dominic D'Agostino
       influencer: {
         name: "Dr. Dominic D'Agostino",
         image: "https://plus.unsplash.com/premium_photo-1681996484614-6afde0d53071?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
         category: "Nutrition"
       },
-      content: "Ketogenic diet reduces seizure frequency in epilepsy patients",
+      content: "Ketogenic diets enhance cognitive function in older adults",
       category: "Nutrition",
       verificationStatus: "questionable",
-      confidenceScore: 75,
+      confidenceScore: 85,
       sourceLinks: [
-        "Epilepsia Journal",
-        "Neurology Today"
+        "Journal of Clinical Nutrition",
+        "Nutritional Neuroscience"
       ],
       scientificReferences: [
         {
-          journal: "Epilepsia",
-          title: "Ketogenic Diet in Epilepsy Management",
+          journal: "Journal of Clinical Nutrition",
+          title: "Effects of Ketogenic Diets on Cognitive Health",
           year: 2024,
-          doi: "10.1111/epi.20240115"
+          doi: "10.1080/1028415X.2024.987654"
         }
       ],
-      datePublished: "2025-01-28",
-      platform: "YouTube",
-      engagement: 12456,
-      aiAnalysis: "More research needed to confirm efficacy across different patient populations."
-    }
+      datePublished: "2025-01-10",
+      platform: "Blog",
+      engagement: 8701,
+      aiAnalysis: "Preliminary studies indicate potential benefits, but more randomized controlled trials are required."
+    },
+    // Claims for influencers 6-27 here
   ];
   
