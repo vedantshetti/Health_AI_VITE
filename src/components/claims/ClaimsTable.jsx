@@ -1,9 +1,14 @@
 // src/components/claims/ClaimsTable.jsx
 import { claims } from "@/data/claims";
 import { format } from "date-fns";
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-const ClaimsTable = ({ selectedStatus, isHighest }) => {
+const ClaimsTable = ({
+  selectedStatus,
+  selectedCategory,
+  isHighest,
+  dateRange,
+}) => {
   const getStatusColor = (status) => {
     switch (status) {
       case "verified":
@@ -26,22 +31,47 @@ const ClaimsTable = ({ selectedStatus, isHighest }) => {
   // Filter and sort claims
   const filteredAndSortedClaims = useMemo(() => {
     let filtered = claims;
-    
+
     // Apply status filter
-    if (selectedStatus !== 'all') {
-      filtered = claims.filter(claim => 
-        claim.verificationStatus === selectedStatus
+    if (selectedStatus !== "all") {
+      filtered = filtered.filter(
+        (claim) => claim.verificationStatus === selectedStatus
       );
+    }
+
+    // Apply category filter
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(
+        (claim) =>
+          claim.category.toLowerCase() === selectedCategory.toLowerCase()
+      );
+    }
+
+    // Apply date range filter
+    if (dateRange.start || dateRange.end) {
+      filtered = filtered.filter((claim) => {
+        const claimDate = new Date(claim.datePublished);
+        const start = dateRange.start ? new Date(dateRange.start) : null;
+        const end = dateRange.end ? new Date(dateRange.end) : null;
+
+        if (start && end) {
+          return claimDate >= start && claimDate <= end;
+        } else if (start) {
+          return claimDate >= start;
+        } else if (end) {
+          return claimDate <= end;
+        }
+        return true;
+      });
     }
 
     // Apply sorting
     return [...filtered].sort((a, b) => {
-      return isHighest 
+      return isHighest
         ? b.confidenceScore - a.confidenceScore
         : a.confidenceScore - b.confidenceScore;
     });
-  }, [selectedStatus, isHighest]);
-
+  }, [selectedStatus, selectedCategory, isHighest, dateRange]);
 
   return (
     <div className="bg-[#0B1120] rounded-lg border border-gray-800">
@@ -51,12 +81,28 @@ const ClaimsTable = ({ selectedStatus, isHighest }) => {
             <table className="w-full">
               <thead className="sticky top-0 bg-[#0B1120] z-10">
                 <tr className="border-b border-gray-800">
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium">INFLUENCER</th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium">CLAIM</th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium">STATUS</th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium">CONFIDENCE</th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium">REFERENCES</th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium">DATE</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">
+                    INFLUENCER
+                  </th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">
+                    CATEGORY
+                  </th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">
+                    CLAIM
+                  </th>
+
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">
+                    STATUS
+                  </th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">
+                    CONFIDENCE
+                  </th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">
+                    REFERENCES
+                  </th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">
+                    DATE
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -74,19 +120,32 @@ const ClaimsTable = ({ selectedStatus, isHighest }) => {
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <span className="text-white text-sm">{claim.influencer.name}</span>
+                        <span className="text-white text-sm">
+                          {claim.influencer.name}
+                        </span>
                       </div>
+                    </td>
+                    <td className="p-4 text-gray-400 text-sm">
+                      {claim.category}
                     </td>
                     <td className="p-4 text-gray-400 text-sm max-w-md">
                       {claim.content}
                     </td>
                     <td className="p-4">
-                      <span className={`px-3 py-1 rounded-full text-xs capitalize ${getStatusColor(claim.verificationStatus)}`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs capitalize ${getStatusColor(
+                          claim.verificationStatus
+                        )}`}
+                      >
                         {claim.verificationStatus}
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className={`text-sm ${getConfidenceColor(claim.confidenceScore)}`}>
+                      <span
+                        className={`text-sm ${getConfidenceColor(
+                          claim.confidenceScore
+                        )}`}
+                      >
                         {claim.confidenceScore}%
                       </span>
                     </td>
@@ -101,7 +160,7 @@ const ClaimsTable = ({ selectedStatus, isHighest }) => {
                       </div>
                     </td>
                     <td className="p-4 text-gray-400 text-sm">
-                      {format(new Date(claim.datePublished), 'MMM dd, yyyy')}
+                      {format(new Date(claim.datePublished), "MMM dd, yyyy")}
                     </td>
                   </tr>
                 ))}

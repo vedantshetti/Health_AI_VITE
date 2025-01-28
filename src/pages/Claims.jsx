@@ -6,7 +6,12 @@ import { claims } from "@/data/claims";
 
 const Claims = () => {
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [isHighest, setIsHighest] = useState(true);
+  const [dateRange, setDateRange] = useState({
+    start: "",
+    end: "",
+  });
 
   return (
     <div className="min-h-screen bg-[#0B1120]">
@@ -24,11 +29,20 @@ const Claims = () => {
         <ClaimsFilter
           selectedStatus={selectedStatus}
           setSelectedStatus={setSelectedStatus}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
           isHighest={isHighest}
           setIsHighest={setIsHighest}
-          claims={claims} // Add this prop
+          dateRange={dateRange}
+          setDateRange={setDateRange}
+          claims={claims}
         />
-        <ClaimsTable selectedStatus={selectedStatus} isHighest={isHighest} />
+        <ClaimsTable
+          selectedStatus={selectedStatus}
+          selectedCategory={selectedCategory}
+          isHighest={isHighest}
+          dateRange={dateRange}
+        />
       </div>
     </div>
   );
