@@ -9,6 +9,16 @@ const InfluencerProfile = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Claims Analysis');
   const [influencer, setInfluencer] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All Categories');
+  const [selectedStatus, setSelectedStatus] = useState('All Statuses');
+  const [sortBy, setSortBy] = useState('Date');
+
+    // Get claims for this influencer
+    const influencerClaims = claims.filter(claim => 
+        claim.influencerId.toString() === id
+      );
+    
   
   useEffect(() => {
     const foundInfluencer = influencers.find(inf => inf.rank.toString() === id);
