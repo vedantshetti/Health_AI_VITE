@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const stats = [
   { label: "Influencers Tracked", value: "1,234" },
@@ -49,108 +50,195 @@ const testimonials = [
   },
 ];
 
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.15, duration: 0.7, type: "spring" },
+  }),
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    transition: { delay: i * 0.15, duration: 0.7 },
+  }),
+};
+
 export default function LandingPage() {
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
-      {/* Navbar */}
+    <div
+      className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-green-50 to-blue-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 text-gray-900 dark:text-white"
+      style={{
+        backgroundAttachment: "fixed",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
 
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center py-20 px-4 bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-800 dark:to-gray-900">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
-          Verify Health Claims from Top Influencers Instantly
-        </h1>
-        <p className="text-lg md:text-2xl mb-8 max-w-2xl">
-          Analyze, verify, and track health-related posts from Twitter
-          influencers using AI and scientific research.
-        </p>
-        <Link
-          to="/signup"
-          className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition"
+      <section className="flex flex-col items-center justify-center text-center py-20 px-4">
+        <motion.h1
+          className="text-4xl md:text-6xl font-extrabold mb-4"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
         >
-          Get Started
-        </Link>
-        <div className="flex justify-center gap-8 mt-12">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-3xl font-bold text-blue-600">
-                {stat.value}
-              </div>
-              <div className="text-gray-600 dark:text-gray-300">
-                {stat.label}
-              </div>
-            </div>
+          Verify Health Claims from Top Influencers Instantly
+        </motion.h1>
+        <motion.p
+          className="text-lg md:text-2xl mb-8 max-w-2xl"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          custom={1}
+        >
+          Analyze, verify, and track health-related posts from Twitter influencers using AI and scientific research.
+        </motion.p>
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
+        >
+          <Link
+            to="/signup"
+            className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition"
+          >
+            Get Started
+          </Link>
+        </motion.div>
+        <div className="flex flex-wrap justify-center gap-8 mt-12">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              className="text-center"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              custom={i + 2}
+            >
+              <div className="text-3xl font-bold text-blue-600">{stat.value}</div>
+              <div className="text-gray-600 dark:text-gray-300">{stat.label}</div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* How It Works */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-center">How It Works</h2>
+        <motion.h2
+          className="text-3xl font-bold mb-8 text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          How It Works
+        </motion.h2>
         <div className="flex flex-col md:flex-row justify-center gap-12">
-          <div className="flex-1 text-center">
-            <div className="text-5xl mb-2">🔎</div>
-            <h3 className="font-semibold text-xl mb-2">Collect Posts</h3>
-            <p>Real-time ingestion of influencer tweets and posts.</p>
-          </div>
-          <div className="flex-1 text-center">
-            <div className="text-5xl mb-2">🤖</div>
-            <h3 className="font-semibold text-xl mb-2">AI Verification</h3>
-            <p>
-              Claims are analyzed and verified using OpenCV and scientific
-              literature.
-            </p>
-          </div>
-          <div className="flex-1 text-center">
-            <div className="text-5xl mb-2">📊</div>
-            <h3 className="font-semibold text-xl mb-2">Trusted Insights</h3>
-            <p>
-              Get transparent trust scores and analytics for every influencer.
-            </p>
-          </div>
+          {[
+            { icon: "🔎", title: "Collect Posts", desc: "Real-time ingestion of influencer tweets and posts." },
+            { icon: "🤖", title: "AI Verification", desc: "Claims are analyzed and verified using OpenCV and scientific literature." },
+            { icon: "📊", title: "Trusted Insights", desc: "Get transparent trust scores and analytics for every influencer." },
+          ].map((item, i) => (
+            <motion.div
+              key={item.title}
+              className="flex-1 text-center"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              custom={i + 1}
+            >
+              <div className="text-5xl mb-2">{item.icon}</div>
+              <h3 className="font-semibold text-xl mb-2">{item.title}</h3>
+              <p>{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* Features */}
-      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800">
-        <h2 className="text-3xl font-bold mb-8 text-center">Key Features</h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {features.map((feature) => (
-            <div
+      <section className="py-16 px-4">
+        <motion.h2
+          className="text-3xl font-bold mb-8 text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          Key Features
+        </motion.h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {features.map((feature, i) => (
+            <motion.div
               key={feature.title}
               className="bg-white dark:bg-gray-900 rounded-lg shadow p-6"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              custom={i + 1}
             >
               <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
               <p className="text-gray-600 dark:text-gray-300">{feature.desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Social Proof */}
       <section className="py-16 px-4 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-center">
+        <motion.h2
+          className="text-3xl font-bold mb-8 text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
           What Experts Say
-        </h2>
-        <div className="grid md:grid-cols-2 gap-8">
-          {testimonials.map((t) => (
-            <div
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {testimonials.map((t, i) => (
+            <motion.div
               key={t.name}
               className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 shadow"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              custom={i + 1}
             >
               <p className="italic mb-4">"{t.quote}"</p>
               <div className="font-semibold">{t.name}</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">
-                {t.title}
-              </div>
-            </div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">{t.title}</div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Leaderboard Preview */}
       <section className="py-16 px-4 max-w-3xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6">Top Influencers</h2>
-        <table className="w-full text-left bg-white dark:bg-gray-900 rounded-lg shadow">
+        <motion.h2
+          className="text-2xl font-bold mb-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          Top Influencers
+        </motion.h2>
+        <motion.table
+          className="w-full text-left bg-white dark:bg-gray-900 rounded-lg shadow"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+        >
           <thead>
             <tr>
               <th className="py-2 px-4">Name</th>
@@ -179,12 +267,9 @@ export default function LandingPage() {
               <td className="py-2 px-4">"Zone 2 cardio for lifespan"</td>
             </tr>
           </tbody>
-        </table>
+        </motion.table>
         <div className="text-center mt-6">
-          <Link
-            to="/leaderboard"
-            className="text-blue-600 hover:underline font-semibold"
-          >
+          <Link to="/leaderboard" className="text-blue-600 hover:underline font-semibold">
             View Full Leaderboard
           </Link>
         </div>
@@ -192,53 +277,76 @@ export default function LandingPage() {
 
       {/* Benefits */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-center">
+        <motion.h2
+          className="text-3xl font-bold mb-8 text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
           Who Is This For?
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center">
-            <h3 className="font-semibold text-lg mb-2">Researchers</h3>
-            <p>
-              Access verified health claims and analytics for studies and
-              reviews.
-            </p>
-          </div>
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center">
-            <h3 className="font-semibold text-lg mb-2">Brands</h3>
-            <p>Identify credible influencers for partnerships and campaigns.</p>
-          </div>
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center">
-            <h3 className="font-semibold text-lg mb-2">General Users</h3>
-            <p>
-              Stay informed about trustworthy health advice and avoid
-              misinformation.
-            </p>
-          </div>
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { title: "Researchers", desc: "Access verified health claims and analytics for studies and reviews." },
+            { title: "Brands", desc: "Identify credible influencers for partnerships and campaigns." },
+            { title: "General Users", desc: "Stay informed about trustworthy health advice and avoid misinformation." },
+          ].map((item, i) => (
+            <motion.div
+              key={item.title}
+              className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              custom={i + 1}
+            >
+              <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+              <p>{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* Signup & Community */}
       <section className="py-16 px-4 bg-blue-50 dark:bg-gray-800 text-center">
-        <h2 className="text-3xl font-bold mb-4">
-          Join the Health Verification Community
-        </h2>
-        <p className="mb-8">
-          Sign up to access advanced analytics, claim verification, and more.
-        </p>
-        <Link
-          to="/signup"
-          className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition"
+        <motion.h2
+          className="text-3xl font-bold mb-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
         >
-          Sign Up Now
-        </Link>
+          Join the Health Verification Community
+        </motion.h2>
+        <motion.p
+          className="mb-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          custom={1}
+        >
+          Sign up to access advanced analytics, claim verification, and more.
+        </motion.p>
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.6, type: "spring" }}
+        >
+          <Link
+            to="/signup"
+            className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition"
+          >
+            Sign Up Now
+          </Link>
+        </motion.div>
         <div className="mt-6">
           <span className="text-gray-600 dark:text-gray-300">
             Already have an account?
           </span>
-          <Link
-            to="/login"
-            className="ml-2 text-blue-600 hover:underline font-semibold"
-          >
+          <Link to="/login" className="ml-2 text-blue-600 hover:underline font-semibold">
             Log in
           </Link>
         </div>
@@ -248,28 +356,15 @@ export default function LandingPage() {
       <footer className="py-8 px-4 bg-gray-900 text-gray-200 mt-12">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <span className="font-bold text-lg">VerifyInfluencers</span> &copy;{" "}
-            {new Date().getFullYear()}
+            <span className="font-bold text-lg">VerifyInfluencers</span> &copy; {new Date().getFullYear()}
           </div>
           <div className="space-x-6">
-            <Link to="/about" className="hover:text-blue-400">
-              About
-            </Link>
-            <Link to="/contact" className="hover:text-blue-400">
-              Contact
-            </Link>
-            <Link to="/leaderboard" className="hover:text-blue-400">
-              Leaderboard
-            </Link>
-            <Link to="/claims" className="hover:text-blue-400">
-              Claims
-            </Link>
-            <Link to="/research-tasks" className="hover:text-blue-400">
-              Research Tasks
-            </Link>
-            <Link to="/admin" className="hover:text-blue-400">
-              Admin
-            </Link>
+            <Link to="/about" className="hover:text-blue-400">About</Link>
+            <Link to="/contact" className="hover:text-blue-400">Contact</Link>
+            <Link to="/leaderboard" className="hover:text-blue-400">Leaderboard</Link>
+            <Link to="/claims" className="hover:text-blue-400">Claims</Link>
+            <Link to="/research-tasks" className="hover:text-blue-400">Research Tasks</Link>
+            <Link to="/admin" className="hover:text-blue-400">Admin</Link>
           </div>
         </div>
         <div className="text-center text-xs text-gray-400 mt-4">
