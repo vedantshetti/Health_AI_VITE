@@ -22,7 +22,6 @@ const navLinks = [
 const Navbar = ({ setBlur }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Handle sidebar open/close and blur state
   const openSidebar = () => {
     setSidebarOpen(true);
     setBlur(true);
@@ -37,7 +36,6 @@ const Navbar = ({ setBlur }) => {
       {/* Only show nav when sidebar is closed */}
       {!sidebarOpen && (
         <nav className="bg-[#0F172A] px-2 sm:px-4 py-3 flex items-center justify-between border-b border-gray-800 fixed top-0 left-0 w-full z-50">
-          {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 min-w-0">
             <div className="w-7 h-7 bg-emerald-500 rounded-md flex items-center justify-center">
               <span className="text-white text-lg">✓</span>
@@ -46,8 +44,6 @@ const Navbar = ({ setBlur }) => {
               VerifyInfluencers
             </span>
           </Link>
-
-          {/* Hamburger for mobile (right aligned) */}
           <button
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
             onClick={openSidebar}
@@ -57,8 +53,6 @@ const Navbar = ({ setBlur }) => {
             <span className="block h-0.5 w-6 bg-white mb-1"></span>
             <span className="block h-0.5 w-6 bg-white"></span>
           </button>
-
-          {/* Desktop nav */}
           <div className="hidden md:flex items-center space-x-4 lg:space-x-8">
             {navLinks.map((link) => (
               <NavLink key={link.to} to={link.to}>
@@ -85,9 +79,12 @@ const Navbar = ({ setBlur }) => {
 
       {sidebarOpen && (
         <aside
-          className={`fixed top-0 right-0 h-full w-3/4 max-w-xs bg-[#0F172A] shadow-lg z-50 transform transition-transform duration-300 ${
-            sidebarOpen ? "translate-x-0" : "translate-x-full"
-          } overflow-y-auto`}
+          className={`fixed top-0 right-0 h-full w-3/4 max-w-xs
+            bg-gradient-to-br from-blue-50 via-green-50 to-blue-100
+            dark:from-gray-900 dark:via-gray-900 dark:to-gray-900
+            shadow-lg z-50 transform transition-transform duration-300 ${
+              sidebarOpen ? "translate-x-0" : "translate-x-full"
+            } overflow-y-auto`}
           aria-label="Sidebar"
         >
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
