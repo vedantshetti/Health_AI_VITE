@@ -8,13 +8,15 @@ import Influencers from './pages/Influencers';
 import InfluencerProfile from './pages/InfluencerProfile';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<ResearchTasks />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/research-tasks" element={<ResearchTasks />} />
           <Route path="/leaderboard" element={<InfluencerLeaderboard />} />
           <Route path="/claims" element={<Claims />} />
           <Route path="/influencers" element={<Influencers />} />

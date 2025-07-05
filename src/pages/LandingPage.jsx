@@ -1,0 +1,281 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
+const stats = [
+  { label: "Influencers Tracked", value: "1,234" },
+  { label: "Claims Verified", value: "25,431" },
+  { label: "Avg. Trust Score", value: "85.7%" },
+];
+
+const features = [
+  {
+    title: "Real-Time Twitter Integration",
+    desc: "Automatically pulls health-related posts from influencers.",
+  },
+  {
+    title: "AI-Powered Claim Verification",
+    desc: "Uses OpenCV and scientific databases to verify claims.",
+  },
+  {
+    title: "Influencer Analytics",
+    desc: "Trust scores, engagement metrics, and trend analysis.",
+  },
+  {
+    title: "Scientific References",
+    desc: "Cross-references claims with top journals.",
+  },
+  {
+    title: "Transparent Scoring",
+    desc: "Shows how trust scores and verifications are calculated.",
+  },
+  {
+    title: "Advanced Search & Filters",
+    desc: "Find influencers or claims by category, credibility, or date.",
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "This platform is a game-changer for health research. The claim verification is transparent and reliable.",
+    name: "Dr. A. Sharma",
+    title: "Medical Researcher",
+  },
+  {
+    quote:
+      "Finally, a way to separate fact from fiction in health advice on social media.",
+    name: "Priya Verma",
+    title: "Wellness Blogger",
+  },
+];
+
+export default function LandingPage() {
+  return (
+    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+      {/* Navbar */}
+
+      {/* Hero Section */}
+      <section className="flex flex-col items-center justify-center text-center py-20 px-4 bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-800 dark:to-gray-900">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
+          Verify Health Claims from Top Influencers Instantly
+        </h1>
+        <p className="text-lg md:text-2xl mb-8 max-w-2xl">
+          Analyze, verify, and track health-related posts from Twitter
+          influencers using AI and scientific research.
+        </p>
+        <Link
+          to="/signup"
+          className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition"
+        >
+          Get Started
+        </Link>
+        <div className="flex justify-center gap-8 mt-12">
+          {stats.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-3xl font-bold text-blue-600">
+                {stat.value}
+              </div>
+              <div className="text-gray-600 dark:text-gray-300">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-16 px-4 max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-center">How It Works</h2>
+        <div className="flex flex-col md:flex-row justify-center gap-12">
+          <div className="flex-1 text-center">
+            <div className="text-5xl mb-2">🔎</div>
+            <h3 className="font-semibold text-xl mb-2">Collect Posts</h3>
+            <p>Real-time ingestion of influencer tweets and posts.</p>
+          </div>
+          <div className="flex-1 text-center">
+            <div className="text-5xl mb-2">🤖</div>
+            <h3 className="font-semibold text-xl mb-2">AI Verification</h3>
+            <p>
+              Claims are analyzed and verified using OpenCV and scientific
+              literature.
+            </p>
+          </div>
+          <div className="flex-1 text-center">
+            <div className="text-5xl mb-2">📊</div>
+            <h3 className="font-semibold text-xl mb-2">Trusted Insights</h3>
+            <p>
+              Get transparent trust scores and analytics for every influencer.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800">
+        <h2 className="text-3xl font-bold mb-8 text-center">Key Features</h2>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {features.map((feature) => (
+            <div
+              key={feature.title}
+              className="bg-white dark:bg-gray-900 rounded-lg shadow p-6"
+            >
+              <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="py-16 px-4 max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          What Experts Say
+        </h2>
+        <div className="grid md:grid-cols-2 gap-8">
+          {testimonials.map((t) => (
+            <div
+              key={t.name}
+              className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 shadow"
+            >
+              <p className="italic mb-4">"{t.quote}"</p>
+              <div className="font-semibold">{t.name}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">
+                {t.title}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Leaderboard Preview */}
+      <section className="py-16 px-4 max-w-3xl mx-auto">
+        <h2 className="text-2xl font-bold mb-6">Top Influencers</h2>
+        <table className="w-full text-left bg-white dark:bg-gray-900 rounded-lg shadow">
+          <thead>
+            <tr>
+              <th className="py-2 px-4">Name</th>
+              <th className="py-2 px-4">Category</th>
+              <th className="py-2 px-4">Trust Score</th>
+              <th className="py-2 px-4">Recent Claim</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="py-2 px-4 font-semibold">Dr. Andrew Huberman</td>
+              <td className="py-2 px-4">Neuroscience</td>
+              <td className="py-2 px-4 text-green-600 font-bold">92%</td>
+              <td className="py-2 px-4">"Sunlight boosts dopamine"</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold">Dr. Rhonda Patrick</td>
+              <td className="py-2 px-4">Nutrition</td>
+              <td className="py-2 px-4 text-green-600 font-bold">89%</td>
+              <td className="py-2 px-4">"Omega-3s support brain health"</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold">Dr. Peter Attia</td>
+              <td className="py-2 px-4">Longevity</td>
+              <td className="py-2 px-4 text-yellow-600 font-bold">84%</td>
+              <td className="py-2 px-4">"Zone 2 cardio for lifespan"</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="text-center mt-6">
+          <Link
+            to="/leaderboard"
+            className="text-blue-600 hover:underline font-semibold"
+          >
+            View Full Leaderboard
+          </Link>
+        </div>
+      </section>
+
+      {/* Benefits */}
+      <section className="py-16 px-4 max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          Who Is This For?
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center">
+            <h3 className="font-semibold text-lg mb-2">Researchers</h3>
+            <p>
+              Access verified health claims and analytics for studies and
+              reviews.
+            </p>
+          </div>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center">
+            <h3 className="font-semibold text-lg mb-2">Brands</h3>
+            <p>Identify credible influencers for partnerships and campaigns.</p>
+          </div>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center">
+            <h3 className="font-semibold text-lg mb-2">General Users</h3>
+            <p>
+              Stay informed about trustworthy health advice and avoid
+              misinformation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Signup & Community */}
+      <section className="py-16 px-4 bg-blue-50 dark:bg-gray-800 text-center">
+        <h2 className="text-3xl font-bold mb-4">
+          Join the Health Verification Community
+        </h2>
+        <p className="mb-8">
+          Sign up to access advanced analytics, claim verification, and more.
+        </p>
+        <Link
+          to="/signup"
+          className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition"
+        >
+          Sign Up Now
+        </Link>
+        <div className="mt-6">
+          <span className="text-gray-600 dark:text-gray-300">
+            Already have an account?
+          </span>
+          <Link
+            to="/login"
+            className="ml-2 text-blue-600 hover:underline font-semibold"
+          >
+            Log in
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 px-4 bg-gray-900 text-gray-200 mt-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+          <div className="mb-4 md:mb-0">
+            <span className="font-bold text-lg">VerifyInfluencers</span> &copy;{" "}
+            {new Date().getFullYear()}
+          </div>
+          <div className="space-x-6">
+            <Link to="/about" className="hover:text-blue-400">
+              About
+            </Link>
+            <Link to="/contact" className="hover:text-blue-400">
+              Contact
+            </Link>
+            <Link to="/leaderboard" className="hover:text-blue-400">
+              Leaderboard
+            </Link>
+            <Link to="/claims" className="hover:text-blue-400">
+              Claims
+            </Link>
+            <Link to="/research-tasks" className="hover:text-blue-400">
+              Research Tasks
+            </Link>
+            <Link to="/admin" className="hover:text-blue-400">
+              Admin
+            </Link>
+          </div>
+        </div>
+        <div className="text-center text-xs text-gray-400 mt-4">
+          Privacy Policy | Terms of Service
+        </div>
+      </footer>
+    </div>
+  );
+}
