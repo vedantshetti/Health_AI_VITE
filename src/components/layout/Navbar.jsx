@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, clearAuth } from "../../store/authSlice";
+import { clearAuth } from "../../store/authSlice";
 
 const NavLink = ({ to, children, onClick }) => (
   <Link
@@ -37,8 +37,8 @@ const Navbar = ({ setBlur }) => {
   };
 
   const handleSignOut = () => {
-    dispatch(logout());
     dispatch(clearAuth());
+
     closeSidebar();
     navigate("/login");
   };
