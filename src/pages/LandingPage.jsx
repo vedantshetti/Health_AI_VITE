@@ -405,30 +405,47 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-4 bg-gray-900 text-gray-200 mt-12">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
+      <footer className="py-8 px-2 sm:px-4 bg-gray-900 text-gray-200 mt-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+          <div className="text-center md:text-left mb-2 md:mb-0">
             <span className="font-bold text-lg">VerifyInfluencers</span> &copy;{" "}
             {new Date().getFullYear()}
           </div>
-          <div className="space-x-6">
-            <Link to="/about" className="hover:text-blue-400">
+          <div className="flex flex-wrap justify-center md:justify-end gap-x-4 gap-y-2">
+            <Link
+              to="/about"
+              className="hover:text-blue-400 min-w-[80px] text-center"
+            >
               About
             </Link>
-            <Link to="/contact" className="hover:text-blue-400">
+            <Link
+              to="/contact"
+              className="hover:text-blue-400 min-w-[80px] text-center"
+            >
               Contact
             </Link>
-            <Link to="/leaderboard" className="hover:text-blue-400">
+            <Link
+              to="/leaderboard"
+              className="hover:text-blue-400 min-w-[80px] text-center"
+            >
               Leaderboard
             </Link>
-            <Link to="/claims" className="hover:text-blue-400">
+            <Link
+              to="/claims"
+              className="hover:text-blue-400 min-w-[80px] text-center"
+            >
               Claims
             </Link>
-            <Link to="/research-tasks" className="hover:text-blue-400">
+            <Link
+              to="/research-tasks"
+              className="hover:text-blue-400 min-w-[80px] text-center"
+            >
               Research Tasks
             </Link>
-            <Link to="/admin" className="hover:text-blue-400">
+            <Link
+              to="/admin"
+              className="hover:text-blue-400 min-w-[80px] text-center"
+            >
               Admin
             </Link>
           </div>
