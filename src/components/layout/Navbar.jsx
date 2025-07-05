@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, clearAuth } from "../../store/authSlice";
 
 const NavLink = ({ to, children, onClick }) => (
   <Link
@@ -21,6 +23,9 @@ const navLinks = [
 
 const Navbar = ({ setBlur }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const openSidebar = () => {
     setSidebarOpen(true);
@@ -31,9 +36,15 @@ const Navbar = ({ setBlur }) => {
     setBlur(false);
   };
 
+  const handleSignOut = () => {
+    dispatch(logout());
+    dispatch(clearAuth());
+    closeSidebar();
+    navigate("/login");
+  };
+
   return (
     <>
-      {/* Only show nav when sidebar is closed */}
       {!sidebarOpen && (
         <nav className="bg-[#0F172A] px-2 sm:px-4 py-3 flex items-center justify-between border-b border-gray-800 fixed top-0 left-0 w-full z-50">
           <Link to="/" className="flex items-center space-x-2 min-w-0">
@@ -59,9 +70,21 @@ const Navbar = ({ setBlur }) => {
                 {link.label}
               </NavLink>
             ))}
-            <button className="text-white hover:text-gray-300 px-4 py-2 rounded transition-colors">
-              Sign Out
-            </button>
+            {user ? (
+              <button
+                className="text-white hover:text-gray-300 px-4 py-2 rounded transition-colors"
+                onClick={handleSignOut}
+              >
+                Sign Out
+              </button>
+            ) : (
+              <Link
+                to="/signup"
+                className="text-white hover:text-gray-300 px-4 py-2 rounded transition-colors"
+              >
+                Sign Up
+              </Link>
+            )}
           </div>
         </nav>
       )}
@@ -115,12 +138,22 @@ const Navbar = ({ setBlur }) => {
               </NavLink>
             ))}
             <hr className="my-2 border-gray-700" />
-            <button
-              className="text-white hover:text-gray-300 px-4 py-3 text-left w-full rounded transition-colors"
-              onClick={closeSidebar}
-            >
-              Sign Out
-            </button>
+            {user ? (
+              <button
+                className="text-white hover:text-gray-300 px-4 py-3 text-left w-full rounded transition-colors"
+                onClick={handleSignOut}
+              >
+                Sign Out
+              </button>
+            ) : (
+              <Link
+                to="/signup"
+                className="text-white hover:text-gray-300 px-4 py-3 text-left w-full rounded transition-colors"
+                onClick={closeSidebar}
+              >
+                Sign Up
+              </Link>
+            )}
           </nav>
         </aside>
       )}
