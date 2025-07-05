@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { UserPlusIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { FaGoogle, FaLinkedinIn, FaGithub } from 'react-icons/fa';
+import { FaGoogle, FaGithub } from 'react-icons/fa';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -127,10 +127,7 @@ const Signup = () => {
             <FaGoogle className="text-emerald-500" size={20} />
             Sign up with Google
           </a>
-          <button className="w-full flex items-center justify-center gap-3 bg-[#0B1120] hover:bg-[#273449] transition-colors text-gray-100 py-2.5 rounded-md" disabled>
-            <FaLinkedinIn className="text-emerald-500" size={20} />
-            Sign up with LinkedIn
-          </button>
+        
           <a
             href={`${API_BASE_URL}/api/auth/github`}
             className="w-full flex items-center justify-center gap-3 bg-[#0B1120] hover:bg-[#273449] transition-colors text-gray-100 py-2.5 rounded-md"
