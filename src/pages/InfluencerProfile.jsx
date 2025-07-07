@@ -9,7 +9,9 @@ const InfluencerProfile = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Claims Analysis');
   const [influencer, setInfluencer] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [postsLoading, setPostsLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -31,6 +33,21 @@ const InfluencerProfile = () => {
       })
       .finally(() => setLoading(false));
   }, [id, navigate]);
+
+
+  useEffect(() => {
+    setPosts([]);
+    setPostsLoading(true);
+    axios
+      .get(`${API_BASE}/influencers/${id}/posts`)
+      .then((res) => {
+        if (res.data && res.data.data) {
+          setPosts(res.data.data);
+        }
+      })
+      .catch(() => setPosts([]))
+      .finally(() => setPostsLoading(false));
+  }, [id]);
 
   if (loading) return <div className="text-white p-8">Loading...</div>;
   if (error || !influencer) return null;
@@ -149,6 +166,39 @@ const InfluencerProfile = () => {
               <option>Date</option>
               <option>Trust Score</option>
             </select>
+          </div>
+
+          {/* Posts List */}
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4">Recent Posts</h2>
+            {postsLoading ? (
+              <div className="text-gray-400">Loading posts...</div>
+            ) : posts.length === 0 ? (
+              <div className="text-gray-400">No posts found for this influencer.</div>
+            ) : (
+              <ul className="space-y-6">
+                {posts.map(post => (
+                  <li
+                    key={post.id}
+                    className="p-4 rounded-lg bg-[#1E293B] border border-gray-700"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-gray-300 text-sm">
+                        {new Date(post.createdAt).toLocaleString()}
+                      </span>
+                      <div className="flex space-x-4 text-xs text-gray-400">
+                        <span>❤️ {post.metrics.likes}</span>
+                        <span>🔁 {post.metrics.retweets}</span>
+                        <span>💬 {post.metrics.replies}</span>
+                      </div>
+                    </div>
+                    <div className="text-white text-base break-words">
+                      {post.text}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </div>
