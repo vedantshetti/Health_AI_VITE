@@ -1,38 +1,45 @@
-// src/pages/InfluencerProfile.jsx
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { influencers } from '@/data/influencers';
-import { claims } from '@/data/claims';
+import axios from 'axios';
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const InfluencerProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Claims Analysis');
   const [influencer, setInfluencer] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All Categories');
-  const [selectedStatus, setSelectedStatus] = useState('All Statuses');
-  const [sortBy, setSortBy] = useState('Date');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-    // Get claims for this influencer
-    const influencerClaims = claims.filter(claim => 
-        claim.influencerId.toString() === id
-      );
-    
-  
   useEffect(() => {
-    const foundInfluencer = influencers.find(inf => inf.rank.toString() === id);
-    if (!foundInfluencer) {
-      navigate('/influencers');
-      return;
-    }
-    setInfluencer(foundInfluencer);
+    setLoading(true);
+    setError('');
+    axios
+      .get(`${API_BASE}/influencers/${id}`)
+      .then((res) => {
+        if (res.data && res.data.data) {
+          setInfluencer(res.data.data);
+        } else {
+          setError('Influencer not found');
+          navigate('/influencers');
+        }
+      })
+      .catch(() => {
+        setError('Influencer not found');
+        navigate('/influencers');
+      })
+      .finally(() => setLoading(false));
   }, [id, navigate]);
 
-  if (!influencer) return null;
+  if (loading) return <div className="text-white p-8">Loading...</div>;
+  if (error || !influencer) return null;
 
   const tabs = ['Claims Analysis', 'Recommended Products', 'Monetization'];
-  const categories = ['All Categories', 'Sleep', 'Performance', 'Hormones', 'Nutrition', 'Exercise', 'Stress', 'Cognition', 'Motivation', 'Recovery', 'Mental Health'];
+  const categories = [
+    'All Categories', 'Sleep', 'Performance', 'Hormones', 'Nutrition',
+    'Exercise', 'Stress', 'Cognition', 'Motivation', 'Recovery', 'Mental Health'
+  ];
 
   return (
     <div className="min-h-screen bg-[#0B1120] p-6">
@@ -41,19 +48,32 @@ const InfluencerProfile = () => {
         <div className="bg-[#0F172A] rounded-lg border border-gray-800 p-6 mb-6">
           <div className="flex items-start gap-6">
             <div className="w-24 h-24 rounded-full overflow-hidden">
-              <img src={influencer.image} alt={influencer.name} className="w-full h-full object-cover" />
+              <img
+                src={influencer.image}
+                alt={influencer.name}
+                className="w-full h-full object-cover"
+                onError={e => { e.target.onerror = null; e.target.src = '/default-profile.png'; }}
+              />
             </div>
             <div className="flex-1">
               <h1 className="text-2xl font-semibold text-white mb-2">{influencer.name}</h1>
               <div className="flex flex-wrap gap-2 mb-4">
-                {['Neuroscience', 'Sleep', 'Performance', 'Hormones'].map(tag => (
-                  <span key={tag} className="px-3 py-1 bg-[#1E293B] text-gray-400 rounded-full text-xs">
-                    {tag}
-                  </span>
-                ))}
+                {influencer.tags?.length
+                  ? influencer.tags.map(tag => (
+                      <span key={tag} className="px-3 py-1 bg-[#1E293B] text-gray-400 rounded-full text-xs">
+                        {tag}
+                      </span>
+                    ))
+                  : ['Neuroscience', 'Sleep', 'Performance', 'Hormones'].map(tag => (
+                      <span key={tag} className="px-3 py-1 bg-[#1E293B] text-gray-400 rounded-full text-xs">
+                        {tag}
+                      </span>
+                    ))
+                }
               </div>
               <p className="text-gray-400 text-sm max-w-3xl">
-                Stanford Professor of Neurobiology and Ophthalmology, focusing on neural development, brain plasticity, and neural regeneration...
+                {influencer.bio ||
+                  "Stanford Professor of Neurobiology and Ophthalmology, focusing on neural development, brain plasticity, and neural regeneration..."}
               </p>
             </div>
           </div>

@@ -5,7 +5,7 @@ const InfluencerCard = ({ influencer }) => {
   return (
     <div
       onClick={() => navigate(`/influencers/${influencer._id}`)}
-      className="bg-[#0F172A] rounded-lg border border-gray-800 p-6"
+      className="bg-[#0F172A] rounded-lg border border-gray-800 p-6 cursor-pointer"
     >
       <div className="flex items-start gap-4">
         <div className="w-16 h-16 rounded-full bg-gray-700 overflow-hidden">
@@ -13,6 +13,7 @@ const InfluencerCard = ({ influencer }) => {
             src={influencer.image}
             alt={influencer.name}
             className="w-full h-full object-cover"
+            onError={e => { e.target.onerror = null; e.target.src = '/default-profile.png'; }}
           />
         </div>
         <div className="flex-1">
@@ -59,7 +60,13 @@ const InfluencerCard = ({ influencer }) => {
         </div>
       </div>
 
-      <button className="w-full mt-6 bg-[#1E293B] text-white rounded-lg py-2 hover:bg-[#2E3B4B] transition-colors">
+      <button
+        className="w-full mt-6 bg-[#1E293B] text-white rounded-lg py-2 hover:bg-[#2E3B4B] transition-colors"
+        onClick={e => {
+          e.stopPropagation();
+          navigate(`/influencers/${influencer._id}`);
+        }}
+      >
         View Full Profile
       </button>
     </div>
