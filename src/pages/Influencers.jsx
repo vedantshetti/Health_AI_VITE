@@ -1,23 +1,33 @@
-// src/pages/Influencers.jsx
-import { useState } from "react";
-import { influencers } from "@/data/influencers";
-import { claims } from "@/data/claims";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import InfluencerSearch from "@/components/influencers/InfluencerSearch";
 import InfluencerCard from "@/components/influencers/InfluencerCard";
 import InfluencerStats from "@/components/influencers/InfluencerStats";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 const Influencers = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [influencers, setInfluencers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedInfluencer, setSelectedInfluencer] = useState(null);
 
-  const filteredInfluencers = influencers.filter(
-    (influencer) =>
-      influencer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      influencer.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`${API_BASE}/influencers${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ""}`)
+      .then(res => setInfluencers(res.data.data))
+      .catch(() => setInfluencers([]))
+      .finally(() => setLoading(false));
+  }, [searchQuery]);
 
-  const getInfluencerClaims = (influencerId) => {
-    return claims.filter((claim) => claim.influencerId === influencerId);
+  const handleSelectInfluencer = async (influencer) => {
+    try {
+      const res = await axios.get(`${API_BASE}/influencers/${influencer._id}`);
+      setSelectedInfluencer(res.data.data);
+    } catch {
+      setSelectedInfluencer(influencer);
+    }
   };
 
   return (
@@ -38,24 +48,23 @@ const Influencers = () => {
           setSearchQuery={setSearchQuery}
         />
 
-        <div className="max-h-[720px] overflow-y-auto scrollbar-thin scrollbar-track-[#0B1120] scrollbar-thumb-gray-700/50 hover:scrollbar-thumb-gray-600/50 pr-2">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-            {filteredInfluencers.map((influencer) => (
-              <div
-                key={influencer.rank}
-                onClick={() =>
-                  setSelectedInfluencer({
-                    ...influencer,
-                    claims: getInfluencerClaims(influencer.rank),
-                  })
-                }
-                className="cursor-pointer"
-              >
-                <InfluencerCard influencer={influencer} />
-              </div>
-            ))}
+        {loading ? (
+          <div className="text-white text-center mt-8">Loading...</div>
+        ) : (
+          <div className="max-h-[720px] overflow-y-auto scrollbar-thin scrollbar-track-[#0B1120] scrollbar-thumb-gray-700/50 hover:scrollbar-thumb-gray-600/50 pr-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+              {influencers.map((influencer) => (
+                <div
+                  key={influencer._id}
+                  onClick={() => handleSelectInfluencer(influencer)}
+                  className="cursor-pointer"
+                >
+                  <InfluencerCard influencer={influencer} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {selectedInfluencer && (
           <div className="mt-8">

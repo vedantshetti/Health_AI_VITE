@@ -1,4 +1,3 @@
-// src/components/influencers/InfluencerSearch.jsx
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 const InfluencerSearch = ({ searchQuery, setSearchQuery }) => {
