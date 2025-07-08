@@ -1,14 +1,15 @@
-// src/components/leaderboard/StatsCards.jsx
 import { UserGroupIcon, CheckCircleIcon, ChartBarIcon } from "@heroicons/react/24/outline";
-import { influencers } from "@/data/influencers";
 
-const StatsCards = () => {
-  // Calculate stats dynamically
-  const stats = {
-    activeInfluencers: influencers.length.toLocaleString(),
-    claimsVerified: influencers.reduce((total, inf) => total + inf.verifiedClaims, 0).toLocaleString(),
-    averageTrustScore: `${(influencers.reduce((total, inf) => total + parseFloat(inf.trustScore), 0) / influencers.length).toFixed(1)}%`
-  };
+const StatsCards = ({ stats, loading }) => {
+  if (loading) {
+    return (
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="bg-[#0B1120] rounded-lg p-4 border border-gray-800 animate-pulse h-24" />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-3 gap-4 mb-6">
