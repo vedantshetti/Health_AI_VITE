@@ -1,13 +1,11 @@
-// src/components/leaderboard/LeaderboardTable.jsx
 import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/24/outline";
-import { influencers } from "@/data/influencers";
 
-const LeaderboardTable = ({ selectedCategory, isHighest }) => {
+const LeaderboardTable = ({ influencers, selectedCategory, isHighest }) => {
   const filteredInfluencers =
     selectedCategory === "all"
       ? influencers
       : influencers.filter(
-          (inf) => inf.category.toLowerCase() === selectedCategory
+          (inf) => inf.category && inf.category.toLowerCase() === selectedCategory
         );
 
   const sortedInfluencers = [...filteredInfluencers].sort((a, b) => {
@@ -24,33 +22,19 @@ const LeaderboardTable = ({ selectedCategory, isHighest }) => {
             <table className="w-full">
               <thead className="sticky top-0 bg-[#0B1120] z-10">
                 <tr className="border-b border-gray-800">
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">
-                    RANK
-                  </th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">
-                    INFLUENCER
-                  </th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">
-                    CATEGORY
-                  </th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">
-                    TRUST SCORE
-                  </th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">
-                    TREND
-                  </th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">
-                    FOLLOWERS
-                  </th>
-                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">
-                    VERIFIED CLAIMS
-                  </th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">RANK</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">INFLUENCER</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">CATEGORY</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">TRUST SCORE</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">TREND</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">FOLLOWERS</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium whitespace-nowrap">VERIFIED CLAIMS</th>
                 </tr>
               </thead>
               <tbody>
                 {sortedInfluencers.map((influencer, index) => (
                   <tr
-                    key={influencer.rank}
+                    key={influencer._id || influencer.rank || index}
                     className="border-b border-gray-800 hover:bg-[#1E293B]/50"
                   >
                     <td className="p-4 text-gray-400 text-sm">#{index + 1}</td>
@@ -62,25 +46,16 @@ const LeaderboardTable = ({ selectedCategory, isHighest }) => {
                               src={influencer.image}
                               alt={influencer.name}
                               className="w-full h-full object-cover"
+                              onError={e => { e.target.onerror = null; e.target.src = '/default-profile.png'; }}
                             />
                           )}
                         </div>
-                        <span className="text-white text-sm whitespace-nowrap">
-                          {influencer.name}
-                        </span>
+                        <span className="text-white text-sm whitespace-nowrap">{influencer.name}</span>
                       </div>
                     </td>
-                    <td className="p-4 text-gray-400 text-sm whitespace-nowrap">
-                      {influencer.category}
-                    </td>
+                    <td className="p-4 text-gray-400 text-sm whitespace-nowrap">{influencer.category}</td>
                     <td className="p-4">
-                      <span
-                        className={`text-sm ${
-                          parseInt(influencer.trustScore) >= 90
-                            ? "text-emerald-500"
-                            : "text-yellow-500"
-                        }`}
-                      >
+                      <span className={`text-sm ${parseInt(influencer.trustScore) >= 90 ? "text-emerald-500" : "text-yellow-500"}`}>
                         {influencer.trustScore}
                       </span>
                     </td>
@@ -91,12 +66,8 @@ const LeaderboardTable = ({ selectedCategory, isHighest }) => {
                         <ArrowDownIcon className="w-4 h-4 text-red-500" />
                       )}
                     </td>
-                    <td className="p-4 text-gray-400 text-sm whitespace-nowrap">
-                      {influencer.followers}
-                    </td>
-                    <td className="p-4 text-gray-400 text-sm">
-                      {influencer.verifiedClaims}
-                    </td>
+                    <td className="p-4 text-gray-400 text-sm whitespace-nowrap">{influencer.followers}</td>
+                    <td className="p-4 text-gray-400 text-sm">{influencer.verifiedClaims}</td>
                   </tr>
                 ))}
               </tbody>
