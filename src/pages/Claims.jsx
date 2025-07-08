@@ -1,17 +1,48 @@
-// src/pages/Claims.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ClaimsFilter from "@/components/claims/ClaimsFilter";
 import ClaimsTable from "@/components/claims/ClaimsTable";
-import { claims } from "@/data/claims";
+import axios from "axios";
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const Claims = () => {
+  const [claims, setClaims] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isHighest, setIsHighest] = useState(true);
-  const [dateRange, setDateRange] = useState({
-    start: "",
-    end: "",
-  });
+  const [dateRange, setDateRange] = useState({ start: "", end: "" });
+  const [loading, setLoading] = useState(true);
+
+  // Fetch claims based on filters
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`${API_BASE}/claims`, {
+        params: {
+          verificationStatus: selectedStatus !== "all" ? selectedStatus : undefined,
+          category: selectedCategory !== "all" ? selectedCategory : undefined,
+          startDate: dateRange.start || undefined,
+          endDate: dateRange.end || undefined,
+        },
+      })
+      .then((res) => setClaims(res.data.data || []))
+      .catch(() => setClaims([]))
+      .finally(() => setLoading(false));
+  }, [selectedStatus, selectedCategory, dateRange]);
+
+  // Fetch categories from analytics/categories endpoint
+  useEffect(() => {
+    axios
+      .get(`${API_BASE}/analytics/categories`)
+      .then((res) => {
+        const cats = (res.data.data || []).filter(
+          (c) => typeof c === "string" && c.trim() !== ""
+        );
+        setCategories(["All", ...cats]);
+      })
+      .catch(() => setCategories(["All"]));
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0B1120]">
@@ -36,12 +67,15 @@ const Claims = () => {
           dateRange={dateRange}
           setDateRange={setDateRange}
           claims={claims}
+          categories={categories}
         />
         <ClaimsTable
+          claims={claims}
           selectedStatus={selectedStatus}
           selectedCategory={selectedCategory}
           isHighest={isHighest}
           dateRange={dateRange}
+          loading={loading}
         />
       </div>
     </div>

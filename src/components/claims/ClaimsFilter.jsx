@@ -1,4 +1,3 @@
-// src/components/claims/ClaimsFilter.jsx
 import { useState } from "react";
 import {
   ArrowUpIcon,
@@ -16,18 +15,10 @@ const ClaimsFilter = ({
   dateRange,
   setDateRange,
   claims,
+  categories,
 }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const statuses = ["All Claims", "Verified", "Questionable", "Debunked"];
-  const categories = [
-    "All",
-    "Medicine",
-    "Nutrition",
-    "Mental Health",
-    "Neuroscience",
-    "Cardiology",
-    "Longevity",
-  ];
 
   const handleExport = () => {
     const headers =
@@ -46,10 +37,10 @@ const ClaimsFilter = ({
       claims
         .map((claim) => {
           const row = [
-            `"${claim.influencer.name}"`,
+            `"${claim.influencer?.name || ""}"`,
             `"${claim.verificationStatus}"`,
             `${claim.confidenceScore}`,
-            `"${claim.scientificReferences[0]?.journal || ""}"`,
+            `"${claim.scientificReferences?.[0]?.journal || ""}"`,
             `"${new Date(claim.datePublished).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
@@ -161,7 +152,7 @@ const ClaimsFilter = ({
                     <input
                       type="date"
                       value={dateRange?.start || ""}
-                      max={new Date().toISOString().split("T")[0]} // Restrict to today
+                      max={new Date().toISOString().split("T")[0]}
                       onChange={(e) =>
                         setDateRange((prev) => ({
                           ...prev,
@@ -178,7 +169,7 @@ const ClaimsFilter = ({
                     <input
                       type="date"
                       value={dateRange?.end || ""}
-                      max={new Date().toISOString().split("T")[0]} // Restrict to today
+                      max={new Date().toISOString().split("T")[0]}
                       onChange={(e) =>
                         setDateRange((prev) => ({
                           ...prev,
