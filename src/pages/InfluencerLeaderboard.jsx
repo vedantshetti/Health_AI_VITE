@@ -39,7 +39,9 @@ const InfluencerLeaderboard = () => {
     if (selectedCategory && selectedCategory !== "all") {
       url += `category=${encodeURIComponent(selectedCategory)}&`;
     }
-    url += `sortBy=${isHighest ? "trustScore" : "trustScore"}&order=${isHighest ? "desc" : "asc"}`;
+    url += `sortBy=${isHighest ? "trustScore" : "trustScore"}&order=${
+      isHighest ? "desc" : "asc"
+    }`;
     axios
       .get(url)
       .then((res) => setLeaderboard(res.data.data || []))
@@ -69,17 +71,24 @@ const InfluencerLeaderboard = () => {
 
         {/* Category Filter */}
         <CategoryFilter
-  selectedCategory={selectedCategory}
-  setSelectedCategory={setSelectedCategory}
-  isHighest={isHighest}
-  setIsHighest={setIsHighest}
-  categories={["all", ...categories.filter(c => typeof c === "string").map(c => c.toLowerCase())]}
-/>
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          isHighest={isHighest}
+          setIsHighest={setIsHighest}
+          categories={[
+            "all",
+            ...categories
+              .filter((c) => typeof c === "string")
+              .map((c) => c.toLowerCase()),
+          ]}
+        />
 
         {/* Leaderboard Table */}
         <div className="mt-8">
           {loading ? (
-            <div className="text-white text-center py-8">Loading leaderboard...</div>
+            <div className="text-white text-center py-8">
+              Loading leaderboard...
+            </div>
           ) : error ? (
             <div className="text-red-500 text-center py-8">{error}</div>
           ) : (
