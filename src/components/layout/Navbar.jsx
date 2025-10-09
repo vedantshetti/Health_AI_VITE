@@ -20,14 +20,16 @@ const NavLink = ({ to, children, onClick }) => {
     <Link
       to={to}
       onClick={onClick}
-      className={`block px-4 py-2 rounded-md text-base font-medium transition-all duration-200 
-        ${
-          isActive
-            ? "text-white bg-emerald-600/30"
-            : "text-gray-300 hover:text-white hover:bg-emerald-600/20"
-        }`}
+      className={`relative block px-4 py-2 text-base font-medium transition-all duration-300
+        ${isActive ? "text-emerald-400" : "text-gray-300 hover:text-white"}`}
     >
       {children}
+      {/* Animated underline */}
+      <span
+        className={`absolute bottom-0 left-1/2 h-[2px] w-0 bg-emerald-500 transition-all duration-300 ease-in-out transform -translate-x-1/2 ${
+          isActive ? "w-3/4" : "group-hover:w-3/4"
+        } hover:w-3/4`}
+      ></span>
     </Link>
   );
 };
@@ -87,23 +89,26 @@ const Navbar = ({ setBlur }) => {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-4 lg:space-x-8">
           {navLinks.map((link) => (
-            <NavLink key={link.to} to={link.to}>
-              {link.label}
-            </NavLink>
+            <div key={link.to} className="group relative">
+              <NavLink to={link.to}>{link.label}</NavLink>
+            </div>
           ))}
+
           {user ? (
             <button
               onClick={handleSignOut}
-              className="text-white hover:text-gray-300 px-4 py-2 rounded-md border border-emerald-500 hover:bg-emerald-600/20 transition-all duration-200"
+              className="relative overflow-hidden text-white hover:text-emerald-400 px-4 py-2 font-medium transition-all duration-300"
             >
               Sign Out
+              <span className="absolute bottom-0 left-1/2 h-[2px] w-0 bg-emerald-500 transition-all duration-300 ease-in-out transform -translate-x-1/2 hover:w-3/4"></span>
             </button>
           ) : (
             <Link
               to="/signup"
-              className="text-white hover:text-gray-300 px-4 py-2 rounded-md border border-emerald-500 hover:bg-emerald-600/20 transition-all duration-200"
+              className="relative overflow-hidden text-white hover:text-emerald-400 px-4 py-2 font-medium transition-all duration-300"
             >
               Sign Up
+              <span className="absolute bottom-0 left-1/2 h-[2px] w-0 bg-emerald-500 transition-all duration-300 ease-in-out transform -translate-x-1/2 hover:w-3/4"></span>
             </Link>
           )}
         </div>
@@ -161,7 +166,7 @@ const Navbar = ({ setBlur }) => {
           {user ? (
             <button
               onClick={handleSignOut}
-              className="text-white hover:text-gray-300 px-4 py-3 text-left w-full rounded-md transition-all duration-200 border border-emerald-500 hover:bg-emerald-600/20"
+              className="text-white hover:text-emerald-400 px-4 py-3 text-left w-full rounded-md transition-all duration-300"
             >
               Sign Out
             </button>
@@ -169,7 +174,7 @@ const Navbar = ({ setBlur }) => {
             <Link
               to="/signup"
               onClick={closeSidebar}
-              className="text-white hover:text-gray-300 px-4 py-3 text-left w-full rounded-md transition-all duration-200 border border-emerald-500 hover:bg-emerald-600/20"
+              className="text-white hover:text-emerald-400 px-4 py-3 text-left w-full rounded-md transition-all duration-300"
             >
               Sign Up
             </Link>
