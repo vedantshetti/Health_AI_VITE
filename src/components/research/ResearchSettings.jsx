@@ -1,9 +1,10 @@
-// src/components/research/ResearchSettings.jsx
 const ResearchSettings = ({
   includeRevenue,
   setIncludeRevenue,
   verifyJournals,
   setVerifyJournals,
+  productsPerInfluencer,
+  setProductsPerInfluencer,
 }) => {
   return (
     <div className="space-y-6">
@@ -14,16 +15,15 @@ const ResearchSettings = ({
         <div className="bg-[#0F172A] rounded-md p-2 border border-gray-800 focus-within:border-emerald-500 focus-within:bg-emerald-900/20">
           <input
             type="number"
-            defaultValue={0}
             min="0"
+            value={productsPerInfluencer}
+            onChange={(e) => {
+              const val = Number(e.target.value);
+              setProductsPerInfluencer(val < 0 ? 0 : val);
+            }}
             onKeyDown={(e) => {
               if (e.key === "-" || e.key === "e") {
                 e.preventDefault();
-              }
-            }}
-            onChange={(e) => {
-              if (e.target.value < 0) {
-                e.target.value = 0;
               }
             }}
             className="w-full bg-transparent text-white outline-none placeholder-gray-400 focus:outline-none focus:ring-0"
@@ -33,7 +33,6 @@ const ResearchSettings = ({
           Set to 0 to skip product research
         </p>
       </div>
-
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
@@ -55,7 +54,6 @@ const ResearchSettings = ({
             />
           </button>
         </div>
-
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-ls text-white">
