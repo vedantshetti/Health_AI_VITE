@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import influencerService from "../services/influencerService";
 import InfluencerSearch from "@/components/influencers/InfluencerSearch";
 import InfluencerCard from "@/components/influencers/InfluencerCard";
 import InfluencerStats from "@/components/influencers/InfluencerStats";
-
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const Influencers = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,18 +11,31 @@ const Influencers = () => {
   const [selectedInfluencer, setSelectedInfluencer] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${API_BASE}/influencers${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ""}`)
-      .then(res => setInfluencers(res.data.data))
-      .catch(() => setInfluencers([]))
-      .finally(() => setLoading(false));
+    fetchInfluencers();
   }, [searchQuery]);
+
+  const fetchInfluencers = async () => {
+    try {
+      setLoading(true);
+      const params = searchQuery ? { search: searchQuery } : {};
+      const response = await influencerService.getAll(params);
+      if (response.success) {
+        setInfluencers(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching influencers:', error);
+      setInfluencers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSelectInfluencer = async (influencer) => {
     try {
-      const res = await axios.get(`${API_BASE}/influencers/${influencer._id}`);
-      setSelectedInfluencer(res.data.data);
+      const response = await influencerService.getById(influencer._id);
+      if (response.success) {
+        setSelectedInfluencer(response.data);
+      }
     } catch {
       setSelectedInfluencer(influencer);
     }

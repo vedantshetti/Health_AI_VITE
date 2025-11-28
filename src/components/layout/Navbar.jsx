@@ -5,11 +5,11 @@ import { clearAuth } from "@/store/authSlice";
 import logo from "@/assets/logo.png"; // your uploaded logo
 
 const navLinks = [
-  { to: "/leaderboard", label: "Leaderboard" },
-  { to: "/claims", label: "Claims" },
+  { to: "/dashboard", label: "Dashboard" },
   { to: "/influencers", label: "Influencers" },
+  { to: "/claims", label: "Claims" },
+  { to: "/leaderboard", label: "Leaderboard" },
   { to: "/research-tasks", label: "Research Tasks" },
-  { to: "/journals", label: "Scientific Journals" },
 ];
 
 const NavLink = ({ to, children, onClick }) => {
