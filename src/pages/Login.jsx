@@ -3,7 +3,7 @@ import { LockClosedIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import authService from "../services/authService";
 import {
   setAuthLoading,
   setAuthError,
@@ -11,10 +11,10 @@ import {
   clearAuthError,
 } from "../store/authSlice";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Login = () => {
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
@@ -24,12 +24,13 @@ const Login = () => {
     dispatch(setAuthLoading(true));
     dispatch(clearAuthError());
     try {
-      const res = await axios.post(`${API_BASE_URL}/api/auth/login`, form);
-      dispatch(
-        setUser({ user: res.data.user, token: res.data.tokens.accessToken })
-      );
-      dispatch(setAuthLoading(false));
-      navigate("/");
+      const res = await authService.login(form);
+      if (res.success) {
+        dispatch(
+          setUser({ user: res.data.user, token: res.data.tokens.accessToken })
+        );
+        navigate("/dashboard");
+      }
     } catch (err) {
       dispatch(
         setAuthError(
@@ -38,6 +39,7 @@ const Login = () => {
             "Login failed"
         )
       );
+    } finally {
       dispatch(setAuthLoading(false));
     }
   };
@@ -56,13 +58,13 @@ const Login = () => {
         </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-gray-400 text-xs mb-1">Username</label>
+            <label className="block text-gray-400 text-xs mb-1">Email</label>
             <input
-              type="text"
+              type="email"
               className="w-full p-3 rounded-md bg-[#0B1120] text-white focus:outline-emerald-500"
-              placeholder="Enter your username"
-              value={form.username}
-              onChange={(e) => setForm({ ...form, username: e.target.value })}
+              placeholder="Enter your email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
             />
           </div>

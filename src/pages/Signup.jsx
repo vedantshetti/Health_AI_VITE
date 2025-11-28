@@ -3,7 +3,7 @@ import { UserPlusIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { FaGoogle, FaGithub } from 'react-icons/fa';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import authService from "../services/authService";
 import {
   setAuthLoading,
   setAuthError,
@@ -12,10 +12,10 @@ import {
   clearRegisterSuccess,
 } from "../store/authSlice";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Signup = () => {
-  const [form, setForm] = useState({ username: "", email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, registerSuccess } = useSelector(state => state.auth);
@@ -24,8 +24,8 @@ const Signup = () => {
     if (registerSuccess) {
       setTimeout(() => {
         dispatch(clearRegisterSuccess());
-        navigate("/");
-      }, 2000);
+        navigate("/login");
+      }, 3000);
     }
     return () => { dispatch(clearAuthError()); };
   }, [registerSuccess, dispatch, navigate]);
@@ -35,15 +35,17 @@ const Signup = () => {
     dispatch(setAuthLoading(true));
     dispatch(clearAuthError());
     try {
-      await axios.post(`${API_BASE_URL}/api/auth/register`, form);
-      dispatch(setRegisterSuccess(true));
-      dispatch(setAuthLoading(false));
+      const res = await authService.register(form);
+      if (res.success) {
+        dispatch(setRegisterSuccess(true));
+      }
     } catch (err) {
       dispatch(setAuthError(
         err.response?.data?.message ||
         err.response?.data?.error ||
         "Registration failed"
       ));
+    } finally {
       dispatch(setAuthLoading(false));
     }
   };
@@ -64,16 +66,15 @@ const Signup = () => {
         </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-gray-400 text-xs mb-1">Username</label>
+            <label className="block text-gray-400 text-xs mb-1">Name</label>
             <input
               type="text"
               className="w-full p-3 rounded-md bg-[#0B1120] text-white focus:outline-emerald-500"
-              placeholder="Choose a username"
-              value={form.username}
-              onChange={e => setForm({ ...form, username: e.target.value })}
+              placeholder="Enter your full name"
+              value={form.name}
+              onChange={e => setForm({ ...form, name: e.target.value })}
               required
-              minLength={3}
-              maxLength={32}
+              minLength={2}
             />
           </div>
           <div>
