@@ -35,6 +35,12 @@ const claimService = {
     const response = await api.post('/claims/get-or-verify', data);
     return response.data;
   },
+
+  // NEW: Fetch all influencer posts and create claims
+  fetchAllInfluencerPosts: async (maxPostsPerInfluencer = 50) => {
+    const response = await api.post('/claims/fetch-all-posts', { maxPostsPerInfluencer });
+    return response.data;
+  },
 };
 
 export default claimService;
