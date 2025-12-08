@@ -16,6 +16,7 @@ const Claims = () => {
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
+  const [verifying, setVerifying] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
   const [error, setError] = useState(null);
 
@@ -95,6 +96,34 @@ const Claims = () => {
     }
   };
 
+  const handleVerifyPendingClaims = async () => {
+    try {
+      setVerifying(true);
+      setError(null);
+      setSuccessMessage(null);
+      
+      const response = await claimService.verifyAllPending(10); // Verify up to 10 pending claims
+      
+      if (response.success) {
+        const data = response.data;
+        setSuccessMessage(
+          `🤖 AI Verification Complete! Verified ${data.verifiedClaims || 0} claims. ${data.message || ''}`
+        );
+        setTimeout(() => setSuccessMessage(null), 10000);
+        
+        // Refresh claims list
+        const claimsRes = await axios.get(`${API_BASE}/claims`);
+        setClaims(claimsRes.data.data || []);
+      }
+    } catch (err) {
+      console.error('Error verifying claims:', err);
+      setError('Failed to verify claims with AI. Please check your OpenAI API key and try again.');
+      setTimeout(() => setError(null), 10000);
+    } finally {
+      setVerifying(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0B1120]">
       <div className="max-w-[1200px] mx-auto px-6 py-16">
@@ -108,15 +137,28 @@ const Claims = () => {
               cross-referenced with scientific research and expert analysis.
             </p>
           </div>
-          <button
-            onClick={handleFetchAllPosts}
-            disabled={fetching}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors"
-            title="Fetch latest 10 posts from all influencers on Twitter (Twitter API has rate limits - 50 requests per 15 min)"
-          >
-            <ArrowDownTrayIcon className={`h-5 w-5 ${fetching ? 'animate-bounce' : ''}`} />
-            {fetching ? 'Fetching Posts...' : 'Fetch All Posts'}
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={handleVerifyPendingClaims}
+              disabled={verifying}
+              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors"
+              title="Verify up to 10 pending claims using OpenAI GPT-4"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${verifying ? 'animate-spin' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {verifying ? 'Verifying...' : 'Verify Pending'}
+            </button>
+            <button
+              onClick={handleFetchAllPosts}
+              disabled={fetching}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors"
+              title="Fetch latest 10 posts from all influencers on Twitter (Twitter API has rate limits - 50 requests per 15 min)"
+            >
+              <ArrowDownTrayIcon className={`h-5 w-5 ${fetching ? 'animate-bounce' : ''}`} />
+              {fetching ? 'Fetching Posts...' : 'Fetch All Posts'}
+            </button>
+          </div>
         </div>
 
         {successMessage && (
@@ -150,6 +192,21 @@ const Claims = () => {
           isHighest={isHighest}
           dateRange={dateRange}
           loading={loading}
+          onVerifyClaim={async (claimId) => {
+            try {
+              const response = await claimService.verifyWithAI(claimId);
+              if (response.success) {
+                setSuccessMessage(`✅ Claim verified successfully!`);
+                setTimeout(() => setSuccessMessage(null), 5000);
+                // Refresh claims
+                const claimsRes = await axios.get(`${API_BASE}/claims`);
+                setClaims(claimsRes.data.data || []);
+              }
+            } catch (err) {
+              setError(`Failed to verify claim: ${err.message}`);
+              setTimeout(() => setError(null), 5000);
+            }
+          }}
         />
       </div>
     </div>
