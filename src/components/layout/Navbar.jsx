@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearAuth } from "@/store/authSlice";
 import logo from "@/assets/logo.png"; // your uploaded logo
+import PropTypes from "prop-types";
 
 const navLinks = [
   { to: "/dashboard", label: "Dashboard" },
@@ -11,28 +12,6 @@ const navLinks = [
   { to: "/leaderboard", label: "Leaderboard" },
   { to: "/research-tasks", label: "Research Tasks" },
 ];
-
-const NavLink = ({ to, children, onClick }) => {
-  const location = useLocation();
-  const isActive = location.pathname === to;
-
-  return (
-    <Link
-      to={to}
-      onClick={onClick}
-      className={`relative block px-4 py-2 text-base font-medium transition-all duration-300
-        ${isActive ? "text-emerald-400" : "text-gray-300 hover:text-white"}`}
-    >
-      {children}
-      {/* Animated underline */}
-      <span
-        className={`absolute bottom-0 left-1/2 h-[2px] w-0 bg-emerald-500 transition-all duration-300 ease-in-out transform -translate-x-1/2 ${
-          isActive ? "w-3/4" : "group-hover:w-3/4"
-        } hover:w-3/4`}
-      ></span>
-    </Link>
-  );
-};
 
 const Navbar = ({ setBlur }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,6 +33,40 @@ const Navbar = ({ setBlur }) => {
     dispatch(clearAuth());
     closeSidebar();
     navigate("/login");
+  };
+
+  const handleNavClick = (to) => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      navigate(to);
+    }
+  };
+
+  const NavLink = ({ to, children }) => {
+    const location = useLocation();
+    const isActive = location.pathname === to;
+
+    return (
+      <div
+        onClick={() => handleNavClick(to)}
+        className={`relative block px-4 py-2 text-base font-medium transition-all duration-300 cursor-pointer
+        ${isActive ? "text-emerald-400" : "text-gray-300 hover:text-white"}`}
+      >
+        {children}
+        {/* Animated underline */}
+        <span
+          className={`absolute bottom-0 left-1/2 h-[2px] w-0 bg-emerald-500 transition-all duration-300 ease-in-out transform -translate-x-1/2 ${
+            isActive ? "w-3/4" : "group-hover:w-3/4"
+          } hover:w-3/4`}
+        ></span>
+      </div>
+    );
+  };
+
+  NavLink.propTypes = {
+    to: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired,
   };
 
   return (
@@ -183,6 +196,10 @@ const Navbar = ({ setBlur }) => {
       </aside>
     </>
   );
+};
+
+Navbar.propTypes = {
+  setBlur: PropTypes.func,
 };
 
 export default Navbar;
