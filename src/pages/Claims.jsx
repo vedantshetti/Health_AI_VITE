@@ -210,10 +210,10 @@ const Claims = () => {
               if (response.success) {
                 const claim = response.data;
                 toast.success(
-                  ` Claim Verified Successfully!\n\n` +
-                  ` Status: ${claim.verificationStatus.toUpperCase()}\n` +
-                  ` Trust Score: ${claim.trustScore}% | Confidence: ${claim.confidenceScore}%\n\n` +
-                  ` Analyzed by OpenAI GPT-4`,
+                  `✅ Claim Verified Successfully!\n\n` +
+                  `🎯 Status: ${claim.verificationStatus.toUpperCase()}\n` +
+                  `📊 Trust Score: ${claim.trustScore}% | Confidence: ${claim.confidenceScore}%\n\n` +
+                  `🤖 Analyzed by OpenAI GPT-4`,
                   6000
                 );
                 // Refresh claims

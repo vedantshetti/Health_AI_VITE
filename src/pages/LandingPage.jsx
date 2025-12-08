@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 
 const stats = [
   { label: "Influencers Tracked", value: "1,234" },
@@ -69,6 +70,18 @@ const fadeIn = {
 };
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+  const { user, token } = useSelector((state) => state.auth);
+  const isAuthenticated = user && token;
+
+  const handleGetStarted = () => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <div
       className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-green-50 to-blue-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 text-gray-900 dark:text-white"
@@ -103,12 +116,12 @@ export default function LandingPage() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
         >
-          <Link
-            to="/signup"
+          <button
+            onClick={handleGetStarted}
             className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition"
           >
             Get Started
-          </Link>
+          </button>
         </motion.div>
         <div className="flex flex-wrap justify-center gap-8 mt-12">
           {stats.map((stat, i) => (
