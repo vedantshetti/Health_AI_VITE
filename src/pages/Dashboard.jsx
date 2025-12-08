@@ -51,14 +51,14 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="flex items-center justify-center min-h-screen bg-[#0a0e27]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-[#0a0e27] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -66,8 +66,8 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600 mt-2">Welcome back! Here's what's happening.</p>
+          <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+          <p className="text-gray-400 mt-2">Welcome back! Here's what's happening.</p>
         </motion.div>
 
         {/* Stats Cards */}
@@ -103,13 +103,13 @@ const Dashboard = () => {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-lg shadow p-6"
+            className="bg-[#1a1f3a] rounded-lg shadow-lg border border-gray-800 p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Recent Influencers</h2>
+              <h2 className="text-xl font-semibold text-white">Recent Influencers</h2>
               <Link 
                 to="/influencers" 
-                className="text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                className="text-emerald-500 hover:text-emerald-400 flex items-center gap-1"
               >
                 View All <FiArrowRight />
               </Link>
@@ -120,7 +120,7 @@ const Dashboard = () => {
                   <Link
                     key={influencer._id}
                     to={`/influencers/${influencer._id}`}
-                    className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition"
+                    className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#252a45] transition"
                   >
                     <img
                       src={influencer.image || '/default-avatar.png'}
@@ -128,21 +128,21 @@ const Dashboard = () => {
                       className="w-12 h-12 rounded-full object-cover"
                     />
                     <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{influencer.name}</h3>
-                      <p className="text-sm text-gray-600">@{influencer.handle}</p>
+                      <h3 className="font-medium text-white">{influencer.name}</h3>
+                      <p className="text-sm text-gray-400">@{influencer.handle}</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-medium text-white">
                         Trust Score: {influencer.trustScore}
                       </div>
-                      <div className="text-xs text-gray-600">
+                      <div className="text-xs text-gray-400">
                         {influencer.followers?.toLocaleString()} followers
                       </div>
                     </div>
                   </Link>
                 ))
               ) : (
-                <p className="text-gray-500 text-center py-4">No influencers yet</p>
+                <p className="text-gray-400 text-center py-4">No influencers yet</p>
               )}
             </div>
           </motion.div>
@@ -151,13 +151,13 @@ const Dashboard = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-lg shadow p-6"
+            className="bg-[#1a1f3a] rounded-lg shadow-lg border border-gray-800 p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Recent Claims</h2>
+              <h2 className="text-xl font-semibold text-white">Recent Claims</h2>
               <Link 
                 to="/claims" 
-                className="text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                className="text-emerald-500 hover:text-emerald-400 flex items-center gap-1"
               >
                 View All <FiArrowRight />
               </Link>
@@ -167,25 +167,25 @@ const Dashboard = () => {
                 recentClaims.map((claim) => (
                   <div
                     key={claim._id}
-                    className="p-3 rounded-lg border border-gray-200 hover:border-gray-300 transition"
+                    className="p-3 rounded-lg border border-gray-700 hover:border-gray-600 transition bg-[#252a45]"
                   >
                     <div className="flex items-start justify-between mb-2">
                       <span className={`text-xs font-medium px-2 py-1 rounded ${getStatusColor(claim.verificationStatus)}`}>
                         {claim.verificationStatus}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-400">
                         {new Date(claim.datePublished).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-800 line-clamp-2">{claim.content}</p>
-                    <div className="mt-2 flex gap-4 text-xs text-gray-600">
+                    <p className="text-sm text-gray-200 line-clamp-2">{claim.content}</p>
+                    <div className="mt-2 flex gap-4 text-xs text-gray-400">
                       <span>Confidence: {claim.confidenceScore}%</span>
                       <span>Trust: {claim.trustScore}%</span>
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-center py-4">No claims yet</p>
+                <p className="text-gray-400 text-center py-4">No claims yet</p>
               )}
             </div>
           </motion.div>
@@ -201,19 +201,19 @@ const Dashboard = () => {
             title="Browse Influencers"
             description="Explore and analyze health influencers"
             link="/influencers"
-            color="bg-blue-500"
+            color="bg-blue-600"
           />
           <QuickActionCard
             title="View Claims"
             description="Review verified and pending claims"
             link="/claims"
-            color="bg-green-500"
+            color="bg-emerald-600"
           />
           <QuickActionCard
             title="Research Tasks"
             description="Contribute to claim verification"
             link="/research-tasks"
-            color="bg-purple-500"
+            color="bg-purple-600"
           />
         </motion.div>
       </div>
@@ -225,15 +225,15 @@ const StatCard = ({ icon, title, value, color }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
-    className="bg-white rounded-lg shadow p-6"
+    className="bg-[#1a1f3a] rounded-lg shadow-lg border border-gray-800 p-6"
   >
     <div className="flex items-center gap-4">
       <div className={`${color} text-white p-3 rounded-lg`}>
         {icon}
       </div>
       <div>
-        <p className="text-gray-600 text-sm">{title}</p>
-        <p className="text-2xl font-bold text-gray-900">{value}</p>
+        <p className="text-gray-400 text-sm">{title}</p>
+        <p className="text-2xl font-bold text-white">{value}</p>
       </div>
     </div>
   </motion.div>
@@ -243,13 +243,13 @@ const QuickActionCard = ({ title, description, link, color }) => (
   <Link to={link}>
     <motion.div
       whileHover={{ scale: 1.02 }}
-      className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition"
+      className="bg-[#1a1f3a] rounded-lg shadow-lg border border-gray-800 p-6 hover:shadow-xl hover:border-gray-700 transition"
     >
       <div className={`${color} w-12 h-12 rounded-lg flex items-center justify-center mb-4`}>
         <FiArrowRight className="text-white w-6 h-6" />
       </div>
-      <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-      <p className="text-gray-600 text-sm">{description}</p>
+      <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+      <p className="text-gray-400 text-sm">{description}</p>
     </motion.div>
   </Link>
 );
