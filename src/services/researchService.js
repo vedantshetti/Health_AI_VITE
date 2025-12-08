@@ -25,6 +25,28 @@ const researchService = {
     const response = await api.get(`/research/evidence/${claimId}`);
     return response.data;
   },
+
+  // Research Report methods
+  generateReport: async (data) => {
+    const response = await api.post('/research/report', data);
+    return response.data;
+  },
+
+  getReports: async (filters = {}) => {
+    const params = new URLSearchParams(filters).toString();
+    const response = await api.get(`/research/reports?${params}`);
+    return response.data;
+  },
+
+  getReport: async (id) => {
+    const response = await api.get(`/research/report/${id}`);
+    return response.data;
+  },
+
+  deleteReport: async (id) => {
+    const response = await api.delete(`/research/report/${id}`);
+    return response.data;
+  },
 };
 
 export default researchService;
