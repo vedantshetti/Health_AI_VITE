@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import analyticsService from '../services/analyticsService';
@@ -97,6 +98,47 @@ const Dashboard = () => {
             color="bg-purple-500"
           />
         </div>
+
+        {/* Claims Breakdown */}
+        {summary && (summary.totalClaims > 0) && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-[#1a1f3a] rounded-lg shadow-lg border border-gray-800 p-6 mb-8"
+          >
+            <h2 className="text-xl font-semibold text-white mb-4">Claims Overview</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="text-center p-4 bg-[#252a45] rounded-lg border border-gray-700">
+                <div className="text-3xl font-bold text-green-400">{summary.verifiedClaims || 0}</div>
+                <div className="text-sm text-gray-400 mt-1">Verified</div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {summary.totalClaims > 0 ? ((summary.verifiedClaims / summary.totalClaims) * 100).toFixed(1) : 0}%
+                </div>
+              </div>
+              <div className="text-center p-4 bg-[#252a45] rounded-lg border border-gray-700">
+                <div className="text-3xl font-bold text-yellow-400">{summary.pendingClaims || 0}</div>
+                <div className="text-sm text-gray-400 mt-1">Pending</div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {summary.totalClaims > 0 ? ((summary.pendingClaims / summary.totalClaims) * 100).toFixed(1) : 0}%
+                </div>
+              </div>
+              <div className="text-center p-4 bg-[#252a45] rounded-lg border border-gray-700">
+                <div className="text-3xl font-bold text-orange-400">{summary.questionableClaims || 0}</div>
+                <div className="text-sm text-gray-400 mt-1">Questionable</div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {summary.totalClaims > 0 ? ((summary.questionableClaims / summary.totalClaims) * 100).toFixed(1) : 0}%
+                </div>
+              </div>
+              <div className="text-center p-4 bg-[#252a45] rounded-lg border border-gray-700">
+                <div className="text-3xl font-bold text-red-400">{summary.debunkedClaims || 0}</div>
+                <div className="text-sm text-gray-400 mt-1">Debunked</div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {summary.totalClaims > 0 ? ((summary.debunkedClaims / summary.totalClaims) * 100).toFixed(1) : 0}%
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Influencers */}
@@ -239,6 +281,13 @@ const StatCard = ({ icon, title, value, color }) => (
   </motion.div>
 );
 
+StatCard.propTypes = {
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  color: PropTypes.string.isRequired,
+};
+
 const QuickActionCard = ({ title, description, link, color }) => (
   <Link to={link}>
     <motion.div
@@ -253,5 +302,12 @@ const QuickActionCard = ({ title, description, link, color }) => (
     </motion.div>
   </Link>
 );
+
+QuickActionCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+};
 
 export default Dashboard;

@@ -25,6 +25,11 @@ const analyticsService = {
     const response = await api.get(`/analytics/influencer/${id}`);
     return response.data;
   },
+
+  getClaimStats: async () => {
+    const response = await api.get('/analytics/claim-stats');
+    return response.data;
+  },
 };
 
 export default analyticsService;

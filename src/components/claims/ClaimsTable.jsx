@@ -1,5 +1,6 @@
 import { format } from "date-fns";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import PropTypes from "prop-types";
 
 const ClaimsTable = ({
   claims,
@@ -8,7 +9,9 @@ const ClaimsTable = ({
   isHighest,
   dateRange,
   loading,
+  onVerifyClaim,
 }) => {
+  const [verifyingId, setVerifyingId] = useState(null);
   const getStatusColor = (status) => {
     switch (status) {
       case "verified":
@@ -88,6 +91,7 @@ const ClaimsTable = ({
                   <th className="text-left p-4 text-gray-400 text-sm font-medium">CONFIDENCE</th>
                   <th className="text-left p-4 text-gray-400 text-sm font-medium">REFERENCES</th>
                   <th className="text-left p-4 text-gray-400 text-sm font-medium">DATE</th>
+                  <th className="text-left p-4 text-gray-400 text-sm font-medium">ACTION</th>
                 </tr>
               </thead>
               <tbody>
@@ -136,11 +140,42 @@ const ClaimsTable = ({
                     <td className="p-4 text-gray-400 text-sm">
                       {format(new Date(claim.datePublished), "MMM dd, yyyy")}
                     </td>
+                    <td className="p-4">
+                      {claim.verificationStatus === 'pending' && onVerifyClaim && (
+                        <button
+                          onClick={async () => {
+                            setVerifyingId(claim._id);
+                            await onVerifyClaim(claim._id);
+                            setVerifyingId(null);
+                          }}
+                          disabled={verifyingId === claim._id}
+                          className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-1 rounded text-xs transition-colors"
+                          title="Verify this claim using AI"
+                        >
+                          {verifyingId === claim._id ? (
+                            <>
+                              <svg className="animate-spin h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              Verifying
+                            </>
+                          ) : (
+                            <>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              Verify
+                            </>
+                          )}
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 ))}
                 {filteredAndSortedClaims.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="text-gray-400 text-center py-8">
+                    <td colSpan={8} className="text-gray-400 text-center py-8">
                       No claims found for the selected filters.
                     </td>
                   </tr>

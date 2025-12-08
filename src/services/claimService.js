@@ -41,6 +41,22 @@ const claimService = {
     const response = await api.post('/claims/fetch-all-posts', { maxPostsPerInfluencer });
     return response.data;
   },
+
+  // NEW: AI Verification endpoints
+  verifyWithAI: async (id) => {
+    const response = await api.post(`/claims/${id}/verify-ai`);
+    return response.data;
+  },
+
+  verifyMultipleWithAI: async (claimIds) => {
+    const response = await api.post('/claims/verify-multiple-ai', { claimIds });
+    return response.data;
+  },
+
+  verifyAllPending: async (limit = 10) => {
+    const response = await api.post('/claims/verify-pending-ai', { limit });
+    return response.data;
+  },
 };
 
 export default claimService;
