@@ -4,6 +4,8 @@ import ClaimsTable from "@/components/claims/ClaimsTable";
 import claimService from "@/services/claimService";
 import axios from "axios";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { ToastContainer } from "@/components/Toast";
+import { useToast } from "@/hooks/useToast";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
@@ -17,8 +19,7 @@ const Claims = () => {
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
   const [verifying, setVerifying] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [error, setError] = useState(null);
+  const toast = useToast();
 
   // Fetch claims based on filters
   useEffect(() => {
@@ -63,18 +64,21 @@ const Claims = () => {
         const data = response.data;
         
         if (data.rateLimitHit) {
-          setError(
-            `Twitter Rate Limit Hit! Processed ${data.processedInfluencers} of ${data.totalInfluencers} influencers. ` +
-            `Fetched ${data.totalPostsFetched} posts, Created ${data.totalClaimsCreated} claims. ` +
-            `Please wait 15 minutes before fetching more.`
+          toast.warning(
+            `⚠️ Twitter Rate Limit Reached!\n\n` +
+            `📊 Progress: Processed ${data.processedInfluencers}/${data.totalInfluencers} influencers\n` +
+            `📥 Fetched ${data.totalPostsFetched} posts | ✨ Created ${data.totalClaimsCreated} new claims\n\n` +
+            `⏳ Please wait 15 minutes before fetching more posts.`,
+            15000
           );
-          setTimeout(() => setError(null), 15000);
         } else {
-          setSuccessMessage(
-            `✅ ${data.message || 'Success!'} Processed: ${data.processedInfluencers}/${data.totalInfluencers} influencers, ` +
-            `Posts: ${data.totalPostsFetched}, Claims Created: ${data.totalClaimsCreated}, Updated: ${data.totalClaimsUpdated}`
+          toast.success(
+            `🎉 Posts Fetched Successfully!\n\n` +
+            `✅ Processed: ${data.processedInfluencers}/${data.totalInfluencers} influencers\n` +
+            `📥 Posts Fetched: ${data.totalPostsFetched}\n` +
+            `✨ New Claims: ${data.totalClaimsCreated} | 🔄 Updated: ${data.totalClaimsUpdated}`,
+            10000
           );
-          setTimeout(() => setSuccessMessage(null), 10000);
         }
         
         // Refresh claims list
@@ -85,12 +89,20 @@ const Claims = () => {
       console.error('Error fetching posts:', err);
       
       if (err.response?.status === 429) {
-        setError('Twitter API rate limit exceeded. Please wait 15 minutes and try again.');
+        toast.error(
+          `⚠️ Twitter API Rate Limit Exceeded\n\n` +
+          `The Twitter API allows only 50 requests per 15 minutes on the free tier.\n` +
+          `⏳ Please wait 15 minutes and try again.`,
+          10000
+        );
       } else {
-        setError('Failed to fetch influencer posts. Please try again.');
+        toast.error(
+          `❌ Failed to Fetch Posts\n\n` +
+          `${err.response?.data?.message || err.message || 'An unexpected error occurred.'}\n\n` +
+          `💡 Please check your internet connection and try again.`,
+          10000
+        );
       }
-      
-      setTimeout(() => setError(null), 10000);
     } finally {
       setFetching(false);
     }
@@ -106,10 +118,13 @@ const Claims = () => {
       
       if (response.success) {
         const data = response.data;
-        setSuccessMessage(
-          `🤖 AI Verification Complete! Verified ${data.verifiedClaims || 0} claims. ${data.message || ''}`
+        toast.success(
+          `🤖 AI Verification Complete!\n\n` +
+          `✅ Successfully verified ${data.verifiedClaims || 0} out of ${data.totalClaims || 10} claims\n` +
+          `🎯 Claims analyzed with OpenAI GPT-4 for accuracy\n\n` +
+          `${data.message || 'Trust scores and confidence levels have been updated.'}`,
+          10000
         );
-        setTimeout(() => setSuccessMessage(null), 10000);
         
         // Refresh claims list
         const claimsRes = await axios.get(`${API_BASE}/claims`);
@@ -117,27 +132,36 @@ const Claims = () => {
       }
     } catch (err) {
       console.error('Error verifying claims:', err);
-      setError('Failed to verify claims with AI. Please check your OpenAI API key and try again.');
-      setTimeout(() => setError(null), 10000);
+      toast.error(
+        `❌ AI Verification Failed\n\n` +
+        `${err.response?.data?.message || err.message || 'Could not connect to OpenAI API'}\n\n` +
+        `💡 Possible solutions:\n` +
+        `• Check your OpenAI API key in .env file\n` +
+        `• Ensure you have API credits available\n` +
+        `• Verify your internet connection`,
+        10000
+      );
     } finally {
       setVerifying(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#0B1120]">
-      <div className="max-w-[1200px] mx-auto px-6 py-16">
-        <div className="mb-8 flex justify-between items-start">
-          <div>
-            <h1 className="text-4xl font-semibold text-white mb-2">
-              Health Claims Verification
-            </h1>
-            <p className="text-gray-400 text-sm">
-              Comprehensive database of verified health claims from influencers,
-              cross-referenced with scientific research and expert analysis.
-            </p>
-          </div>
-          <div className="flex gap-3">
+    <>
+      <ToastContainer toasts={toast.toasts} onRemove={toast.removeToast} />
+      <div className="min-h-screen bg-[#0B1120]">
+        <div className="max-w-[1200px] mx-auto px-6 py-16">
+          <div className="mb-8 flex justify-between items-start">
+            <div>
+              <h1 className="text-4xl font-semibold text-white mb-2">
+                Health Claims Verification
+              </h1>
+              <p className="text-gray-400 text-sm">
+                Comprehensive database of verified health claims from influencers,
+                cross-referenced with scientific research and expert analysis.
+              </p>
+            </div>
+            <div className="flex gap-3">
             <button
               onClick={handleVerifyPendingClaims}
               disabled={verifying}
@@ -160,18 +184,6 @@ const Claims = () => {
             </button>
           </div>
         </div>
-
-        {successMessage && (
-          <div className="bg-green-500/10 border border-green-500 text-green-500 px-4 py-3 rounded-lg mb-4">
-            {successMessage}
-          </div>
-        )}
-
-        {error && (
-          <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-4">
-            {error}
-          </div>
-        )}
 
         <ClaimsFilter
           selectedStatus={selectedStatus}
@@ -196,20 +208,31 @@ const Claims = () => {
             try {
               const response = await claimService.verifyWithAI(claimId);
               if (response.success) {
-                setSuccessMessage(`✅ Claim verified successfully!`);
-                setTimeout(() => setSuccessMessage(null), 5000);
+                const claim = response.data;
+                toast.success(
+                  ` Claim Verified Successfully!\n\n` +
+                  ` Status: ${claim.verificationStatus.toUpperCase()}\n` +
+                  ` Trust Score: ${claim.trustScore}% | Confidence: ${claim.confidenceScore}%\n\n` +
+                  ` Analyzed by OpenAI GPT-4`,
+                  6000
+                );
                 // Refresh claims
                 const claimsRes = await axios.get(`${API_BASE}/claims`);
                 setClaims(claimsRes.data.data || []);
               }
             } catch (err) {
-              setError(`Failed to verify claim: ${err.message}`);
-              setTimeout(() => setError(null), 5000);
+              toast.error(
+                `❌ Verification Failed\n\n` +
+                `${err.response?.data?.message || err.message || 'Could not verify claim'}\n\n` +
+                `Please try again or contact support if the issue persists.`,
+                6000
+              );
             }
           }}
         />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
