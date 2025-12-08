@@ -14,7 +14,7 @@ import {
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Login = () => {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ username: "", password: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
@@ -58,13 +58,13 @@ const Login = () => {
         </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-gray-400 text-xs mb-1">Email</label>
+            <label className="block text-gray-400 text-xs mb-1">Username</label>
             <input
-              type="email"
+              type="text"
               className="w-full p-3 rounded-md bg-[#0B1120] text-white focus:outline-emerald-500"
-              placeholder="Enter your email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              placeholder="Enter your username"
+              value={form.username}
+              onChange={(e) => setForm({ ...form, username: e.target.value })}
               required
             />
           </div>
