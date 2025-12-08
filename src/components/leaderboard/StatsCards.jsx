@@ -19,7 +19,7 @@ const StatsCards = ({ stats, loading }) => {
             <UserGroupIcon className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-2xl font-semibold text-white">{stats.activeInfluencers}</div>
+            <div className="text-2xl font-semibold text-white">{stats?.activeInfluencers || 0}</div>
             <div className="text-sm text-gray-400">Active Influencers</div>
           </div>
         </div>
@@ -31,7 +31,7 @@ const StatsCards = ({ stats, loading }) => {
             <CheckCircleIcon className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-2xl font-semibold text-white">{stats.claimsVerified}</div>
+            <div className="text-2xl font-semibold text-white">{stats?.claimsVerified || 0}</div>
             <div className="text-sm text-gray-400">Claims Verified</div>
           </div>
         </div>
@@ -43,7 +43,7 @@ const StatsCards = ({ stats, loading }) => {
             <ChartBarIcon className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-2xl font-semibold text-white">{stats.averageTrustScore}</div>
+            <div className="text-2xl font-semibold text-white">{stats?.averageTrustScore || "0.0"}</div>
             <div className="text-sm text-gray-400">Average Trust Score</div>
           </div>
         </div>
